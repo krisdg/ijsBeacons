@@ -1,83 +1,51 @@
 package com.example.ijsbeacons;
 
+import java.util.regex.Pattern;
+
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.Activity;
-import android.app.ActionBar;
-import android.app.Fragment;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Patterns;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.os.Build;
+import android.provider.Settings.Secure;
 
 public class StartupActivity extends Activity
 {
 	
-	Button button;
+	String android_id;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
+        getActionBar().setTitle("ijsBeacons");
+        
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_startup);
-
-		if (savedInstanceState == null)
-		{
-			getFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
+		
+		android_id = Secure.getString(getBaseContext().getContentResolver(), Secure.ANDROID_ID);
+		
+		if (BackgroundService.isRunning == false) {
+			System.out.println("START SERVICE MANUALLY");
+            Intent service = new Intent(this, BackgroundService.class);
+            startService(service);
 		}
 		
-		final Button button = (Button) findViewById(R.id.button1);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Perform action on click
-            }
-        });
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
-	{
-
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.startup, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
+		//CHECK IF ANDROID ID EXISTS IN DATABASE
+		boolean userExists = true; //DEBUG
+		
+		if (userExists) {
+			//IF SO: GO TO MAINACTIVITY
+	    	Intent intent = new Intent(this, MainActivity.class);
+	        startActivity(intent);
+		} else {
+			//ELSE:  GO TO LOGIN ACTIVITY
+	    	Intent intent = new Intent(this, LoginActivity.class);
+	        startActivity(intent);
 		}
-		return super.onOptionsItemSelected(item);
+		
+		finish();
 	}
-
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment
-	{
-
-		public PlaceholderFragment()
-		{
-			
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-		{
-			View rootView = inflater.inflate(R.layout.fragment_startup, container, false);
-			return rootView;
-		}
-	}
-
 }
