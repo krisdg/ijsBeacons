@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.estimote.sdk.Beacon;
 import com.estimote.sdk.BeaconManager;
 import com.estimote.sdk.Region;
+import com.estimote.sdk.Utils;
 import com.estimote.sdk.utils.L;
 
 import java.util.ArrayList;
@@ -51,8 +52,9 @@ public class BackgroundService extends Service {
 	      public void onBeaconsDiscovered(Region region, final List<Beacon> rangedBeacons) {
 	        // Note that results are not delivered on UI thread.
 	            for (Beacon rangedBeacon : rangedBeacons) {
-	              System.out.println(rangedBeacon.getMacAddress());
+	              System.out.println(String.format("BEACON MAC: %s (%.2fm)", rangedBeacon.getMacAddress(), Utils.computeAccuracy(rangedBeacon)));
 	            }
+	            
 	          }
 	    });
     }

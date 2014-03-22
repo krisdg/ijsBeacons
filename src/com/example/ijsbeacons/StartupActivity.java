@@ -33,6 +33,10 @@ public class StartupActivity extends Activity
             startService(service);
 		}
 		
+		//DEBUG!!
+		((IJsBeaconsApplication) this.getApplication()).setLastUpdate(123);
+		int i = ((IJsBeaconsApplication) this.getApplication()).getLastUpdate();
+		
 		//CHECK IF ANDROID ID EXISTS IN DATABASE
 		boolean userExists = true; //DEBUG
 		
