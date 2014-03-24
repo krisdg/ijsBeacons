@@ -52,16 +52,18 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View arg0) {
-		switch (arg0.getId()) {
-	    case R.id.but_register:
-	    	//Register user into database
-	    	Intent intent = new Intent(this, StartupActivity.class);
-	        startActivity(intent);
-	    	finish();
-	    case R.id.but_close:
-	    	//Close app
-	    	finish();
-	    	System.exit(0);
+		switch (arg0.getId())
+		{
+		    case R.id.but_register:
+		    	//Register user into database
+		    	Intent intent = new Intent(this, StartupActivity.class);
+		        startActivity(intent);
+		    	finish();
+		    	
+		    case R.id.but_close:
+		    	//Close app
+		    	finish();
+		    	System.exit(0);
 		}
 	}
 

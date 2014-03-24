@@ -29,26 +29,28 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         pager = (ViewPager) findViewById(R.id.viewPager);
         pager.setAdapter(pa);
         
-     // Set up the action bar.
-     		final ActionBar actionBar = getActionBar();
-     		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+    	 // Set up the action bar.
+ 		final ActionBar actionBar = getActionBar();
+ 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-     		// When swiping between different sections, select the corresponding
-     		// tab. We can also use ActionBar.Tab#select() to do this if we have
-     		// a reference to the Tab.
-     		pager
-     				.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-     					@Override
-     					public void onPageSelected(int position) {
-     						actionBar.setSelectedNavigationItem(position);
-     					}
-     				});
+ 		// When swiping between different sections, select the corresponding
+ 		// tab. We can also use ActionBar.Tab#select() to do this if we have
+ 		// a reference to the Tab.
+ 		pager.setOnPageChangeListener(
+			new ViewPager.SimpleOnPageChangeListener()
+	 		{
+				@Override
+				public void onPageSelected(int position) {
+					actionBar.setSelectedNavigationItem(position);
+				}
+			}
+		);
 
-     		// For each of the sections in the app, add a tab to the action bar.
-     		actionBar.addTab(actionBar.newTab().setText("A").setTabListener(this));
-     		actionBar.addTab(actionBar.newTab().setText("B").setTabListener(this));
-     		actionBar.addTab(actionBar.newTab().setText("C").setTabListener(this));
-     		actionBar.addTab(actionBar.newTab().setText("D").setTabListener(this));
+ 		// For each of the sections in the app, add a tab to the action bar.
+ 		actionBar.addTab(actionBar.newTab().setText("A").setTabListener(this));
+ 		actionBar.addTab(actionBar.newTab().setText("B").setTabListener(this));
+ 		actionBar.addTab(actionBar.newTab().setText("C").setTabListener(this));
+ 		actionBar.addTab(actionBar.newTab().setText("D").setTabListener(this));
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
@@ -59,13 +61,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         @Override
         public Fragment getItem(int pos) {
-            switch(pos) {
-
-            case 0: return UserStatistics.newInstance("UserStatistics, Instance 1");
-            case 1: return Toplist.newInstance("Toplist, Instance 1");
-            case 2: return Toplist.newInstance("Toplist, Instance 2");
-            case 3: return Toplist.newInstance("Toplist, Instance 3");
-            default: return Toplist.newInstance("Toplist, Default");
+            switch(pos)
+            {
+	            case 0: return UserStatistics.newInstance("UserStatistics, Instance 1");
+	            case 1: return Toplist.newInstance("Toplist, Instance 1");
+	            case 2: return Toplist.newInstance("Toplist, Instance 2");
+	            case 3: return Toplist.newInstance("Toplist, Instance 3");
+	            default: return Toplist.newInstance("Toplist, Default");
             }
         }
 
