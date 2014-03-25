@@ -22,7 +22,7 @@ import org.ksoap2.transport.HttpTransportSE;
 
 import com.example.ijsbeacons.SOAP.SendSoapRequest;
 import com.example.ijsbeacons.SOAP.SoapRequest_getUserByAndroidId;
-import com.example.ijsbeacons.SOAP.SoapResult_getUserByAndroidId;
+import com.example.ijsbeacons.SOAP.SoapResult_getUser;
 
 public class Toplist extends Fragment implements OnClickListener
 {
@@ -53,7 +53,7 @@ public class Toplist extends Fragment implements OnClickListener
 	public void onClick(View arg0)
 	{
 		try {
-			SoapResult_getUserByAndroidId result = (SoapResult_getUserByAndroidId) new SendSoapRequest().execute(new SoapRequest_getUserByAndroidId("abc")).get();
+			SoapResult_getUser result = (SoapResult_getUser) new SendSoapRequest().execute(new SoapRequest_getUserByAndroidId("abc")).get();
 		
 			Toast.makeText(this.getActivity(), "Result: " + result.resultCode + " - " + result.userId, Toast.LENGTH_LONG).show();
 		} catch (InterruptedException e) {

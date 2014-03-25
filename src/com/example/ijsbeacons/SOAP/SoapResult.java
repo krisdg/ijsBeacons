@@ -1,12 +1,18 @@
 package com.example.ijsbeacons.SOAP;
 
-public class SoapResult_default {
+public class SoapResult {
 	public int resultCode = 0;
+	public String resultMessage = "";
 
-	public SoapResult_default() {
+	public SoapResult() {
 	}
 
-	public SoapResult_default(int resultCode) {
+	public SoapResult(int resultCode) {
 		this.resultCode = resultCode;
+	}
+	
+	public SoapResult(int resultCode, String resultMessage) {
+		this.resultCode = resultCode;
+		this.resultMessage = resultMessage;
 	}
 }
