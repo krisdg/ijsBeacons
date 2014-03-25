@@ -19,8 +19,6 @@ import android.provider.Settings.Secure;
 public class StartupActivity extends Activity
 {
 	
-	String android_id;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -29,7 +27,8 @@ public class StartupActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_startup);
 		
-		android_id = Secure.getString(getBaseContext().getContentResolver(), Secure.ANDROID_ID);
+		String userAndroidId = Secure.getString(getBaseContext().getContentResolver(), Secure.ANDROID_ID);
+		((IJsBeaconsApplication) this.getApplication()).setUserAndroidId(userAndroidId);
 		
 		if (BackgroundService.isRunning == false) {
 			System.out.println("START SERVICE MANUALLY");
@@ -40,7 +39,7 @@ public class StartupActivity extends Activity
 		//CHECK IF ANDROID ID EXISTS IN DATABASE
 		boolean userExists = false;
 		try {
-			SoapResult_getUserByAndroidId result = (SoapResult_getUserByAndroidId) new SendSoapRequest().execute(new SoapRequest_getUserByAndroidId(android_id)).get();
+			SoapResult_getUser result = (SoapResult_getUser) new SendSoapRequest().execute(new SoapRequest_getUserByAndroidId(userAndroidId)).get();
 		
 			if (result != null && result.resultCode == 1) {
 				userExists = true;
@@ -52,10 +51,6 @@ public class StartupActivity extends Activity
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		//DEBUG!!
-		((IJsBeaconsApplication) this.getApplication()).setLastUpdate(123);
-		int i = ((IJsBeaconsApplication) this.getApplication()).getLastUpdate();
 		
 		if (userExists) {
 			//IF SO: GO TO MAINACTIVITY
