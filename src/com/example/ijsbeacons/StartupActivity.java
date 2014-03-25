@@ -36,12 +36,15 @@ public class StartupActivity extends Activity
             Intent service = new Intent(this, BackgroundService.class);
             startService(service);
 		}
-		
 
+		//CHECK IF ANDROID ID EXISTS IN DATABASE
+		boolean userExists = false;
 		try {
 			SoapResult_getUserByAndroidId result = (SoapResult_getUserByAndroidId) new SendSoapRequest().execute(new SoapRequest_getUserByAndroidId(android_id)).get();
 		
-			Toast.makeText(this, "Result: " + result.returnCode, Toast.LENGTH_LONG).show();
+			if (result != null && result.resultCode == 1) {
+				userExists = true;
+			}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -53,9 +56,6 @@ public class StartupActivity extends Activity
 		//DEBUG!!
 		((IJsBeaconsApplication) this.getApplication()).setLastUpdate(123);
 		int i = ((IJsBeaconsApplication) this.getApplication()).getLastUpdate();
-		
-		//CHECK IF ANDROID ID EXISTS IN DATABASE
-		boolean userExists = true; //DEBUG
 		
 		if (userExists) {
 			//IF SO: GO TO MAINACTIVITY
