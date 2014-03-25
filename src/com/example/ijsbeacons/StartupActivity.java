@@ -1,6 +1,9 @@
 package com.example.ijsbeacons;
 
+import java.util.concurrent.ExecutionException;
 import java.util.regex.Pattern;
+
+import com.example.ijsbeacons.SOAP.*;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -10,6 +13,7 @@ import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 import android.provider.Settings.Secure;
 
 public class StartupActivity extends Activity
@@ -31,6 +35,19 @@ public class StartupActivity extends Activity
 			System.out.println("START SERVICE MANUALLY");
             Intent service = new Intent(this, BackgroundService.class);
             startService(service);
+		}
+		
+
+		try {
+			SoapResult_getUserByAndroidId result = (SoapResult_getUserByAndroidId) new SendSoapRequest().execute(new SoapRequest_getUserByAndroidId(android_id)).get();
+		
+			Toast.makeText(this, "Result: " + result.returnCode, Toast.LENGTH_LONG).show();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		//DEBUG!!
