@@ -83,21 +83,10 @@ public class SendSoapRequest extends AsyncTask<SoapRequest, String, SoapResult> 
 				}
 
 				if (soaprequest[0] instanceof SoapRequest_getPersonalStatistics) {
-					/**
-					 *  TO-DO: aanpassen naar getPersonalStatistics
-					 */
 					int counter = 0;
-					String[] aNames = {
-							"CoffeeMachineDay",
-							"WalkedDistanceDay",
-							"SeenSurfaceDay",
-							"WalkingSpeedDay",
-
-							"CoffeeMachineMonth",
-							"WalkedDistanceMonth",
-							"SeenSurfaceMonth",
-							"WalkingSpeedMonth",
-					};
+					
+					int[] dayStatistics = new int[4]; //CoffeeMachineDay, WalkedDistanceDay, SeenSurfaceDay, WalkingSpeedDay
+					int[] monthStatistics = new int[4]; //CoffeeMachineMonth, WalkedDistanceMonth, SeenSurfaceMonth, WalkingSpeedMonth
 
 					SoapResult_getPersonalStatistics resultObject = new SoapResult_getPersonalStatistics();
 					
@@ -109,34 +98,15 @@ public class SendSoapRequest extends AsyncTask<SoapRequest, String, SoapResult> 
 						
 						if (resultObject.resultCode == 1)
 						{
-							Map<String, Integer> aValue = new HashMap<String, Integer>();
-							int tempVal;
-							System.out.println("Dingen");
-							System.out.println();
-							System.out.println("Dingenn");
-							if( (Map)soapresult.get(2) instanceof Map )
-							{
-								for( String name : aNames )
-								{
-									tempVal = (Integer) ((Vector) soapresult.get(2)).get(counter);
-									aValue.put(name, tempVal);
-									counter++;
-								}
+							for (String value : soapresult.get(2).toString().split(";")) {
+								dayStatistics[counter] = Integer.parseInt(value);
+								counter++;
 							}
 							counter = 0;
-
-							if( soapresult.get(3) instanceof Map )
-							{
-								for( String name : aNames )
-								{
-									if( (counter + 4) < 4 ) continue;
-									tempVal = (Integer) ((Vector) soapresult.get(3)).get(counter);
-									aValue.put(name, tempVal);
-									counter++;
-								}
+							for (String value : soapresult.get(3).toString().split(";")) {
+								monthStatistics[counter] = Integer.parseInt(value);
+								counter++;
 							}
-							
-							resultObject.aValue = aValue;
 						}
 					}
 

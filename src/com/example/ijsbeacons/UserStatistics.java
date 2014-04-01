@@ -36,28 +36,28 @@ public class UserStatistics extends Fragment {
 			if (result.resultCode == 1)
 			{
 		        TextView tvCoffeeMachineDay = (TextView) v.findViewById(R.id.tvCoffeeMachineDay);
-		        tvCoffeeMachineDay.setText(result.aValue.get("CoffeeMachineDay"));
+		        tvCoffeeMachineDay.setText(result.dayStatistics[0]);
 
 		        TextView tvWalkedDistanceDay = (TextView) v.findViewById(R.id.tvWalkedDistanceDay);
-		        tvWalkedDistanceDay.setText(result.aValue.get("WalkedDistanceDay"));
+		        tvWalkedDistanceDay.setText(result.dayStatistics[1]);
 
 		        TextView tvSeenSurfaceDay = (TextView) v.findViewById(R.id.tvSeenSurfaceDay);
-		        tvSeenSurfaceDay.setText(result.aValue.get("SeenSurfaceDay"));
+		        tvSeenSurfaceDay.setText(result.dayStatistics[2]);
 
 		        TextView tvWalkingSpeedDay = (TextView) v.findViewById(R.id.tvWalkingSpeedDay);
-		        tvWalkingSpeedDay.setText(result.aValue.get("WalkingSpeedDay"));
+		        tvWalkingSpeedDay.setText(result.dayStatistics[3]);
 
 		        TextView tvCoffeeMachineMonth = (TextView) v.findViewById(R.id.tvCoffeeMachineMonth);
-		        tvCoffeeMachineMonth.setText(result.aValue.get("CoffeeMachineMonth"));
+		        tvCoffeeMachineMonth.setText(result.monthStatistics[0]);
 
 		        TextView tvWalkedDistanceMonth = (TextView) v.findViewById(R.id.tvWalkedDistanceMonth);
-		        tvWalkedDistanceMonth.setText(result.aValue.get("WalkedDistanceMonth"));
+		        tvWalkedDistanceMonth.setText(result.monthStatistics[1]);
 
 		        TextView tvSeenSurfaceMonth = (TextView) v.findViewById(R.id.tvSeenSurfaceMonth);
-		        tvSeenSurfaceMonth.setText(result.aValue.get("SeenSurfaceMonth"));
+		        tvSeenSurfaceMonth.setText(result.monthStatistics[2]);
 
 		        TextView tvWalkingSpeedMonth = (TextView) v.findViewById(R.id.tvWalkingSpeedMonth);
-		        tvWalkingSpeedMonth.setText(result.aValue.get("WalkingSpeedMonth"));
+		        tvWalkingSpeedMonth.setText(result.monthStatistics[3]);
 
 			}
 		} catch (InterruptedException e) {
