@@ -286,18 +286,18 @@ public class BackgroundService extends Service {
 			timestampAttic = System.currentTimeMillis();
 			
 			if (timestampGroundFloor != 0) {
-				long difference = timestampAttic - timestampGroundFloor;
-				difference = difference / 1000;
-				double localWalkingSpeed = calculateDistance(getBeaconByName("HALL"), getBeaconByName("ATTIC")) / difference * 3.6;
-				if (localWalkingSpeed > walkingSpeed && difference > 10000 && difference < 60000) {
+				long timeDifference = timestampAttic - timestampGroundFloor;
+				timeDifference = timeDifference / 1000;
+				double localWalkingSpeed = calculateDistance(getBeaconByName("HALL"), getBeaconByName("ATTIC")) / timeDifference * 3.6;
+				if (localWalkingSpeed > walkingSpeed && timeDifference > 10000 && timeDifference < 60000) {
 					walkingSpeed = localWalkingSpeed;
 					
-					System.out.println("NEW HIGHSCORE WALKINGSPEED: " + walkingSpeed);
+					System.out.println("NEW USER HIGHSCORE WALKINGSPEED: " + walkingSpeed);
 				}
 			}
 		}
 		
-		//Seensurface
+		//Seen surface
 		boolean foundBeacon = false;
 		for (BeaconIdentifier bcn : seenSurfaceBeacons) {
 			if (bcn.MAC.equals(newBeacon.MAC)) {
@@ -358,7 +358,7 @@ public class BackgroundService extends Service {
 		}
 
 		System.out.println("SERVICE STARTED");
-		Toast.makeText(this, " Service Started", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "Service Started", Toast.LENGTH_SHORT).show();
 
 		beaconManager.connect(new BeaconManager.ServiceReadyCallback() {
 			@Override
@@ -382,7 +382,7 @@ public class BackgroundService extends Service {
 	public void onDestroy() {
 		isRunning = false;
 
-		Toast.makeText(this, " Service Killed", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "Service Killed", Toast.LENGTH_SHORT).show();
 	}
 
 }
