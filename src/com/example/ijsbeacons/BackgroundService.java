@@ -289,7 +289,7 @@ public class BackgroundService extends Service {
 				long difference = timestampAttic - timestampGroundFloor;
 				difference = difference / 1000;
 				double localWalkingSpeed = calculateDistance(getBeaconByName("HALL"), getBeaconByName("ATTIC")) / difference * 3.6;
-				if (localWalkingSpeed > walkingSpeed) {
+				if (localWalkingSpeed > walkingSpeed && difference > 10000 && difference < 60000) {
 					walkingSpeed = localWalkingSpeed;
 					
 					System.out.println("NEW HIGHSCORE WALKINGSPEED: " + walkingSpeed);
