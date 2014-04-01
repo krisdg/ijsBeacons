@@ -39,18 +39,22 @@ public class BackgroundService extends Service {
 	double walkedDistance = 0;
 	int coffeeMachineCount = 0;
 	List<BeaconIdentifier> seenSurfaceBeacons = new ArrayList<BeaconIdentifier>();
-	int walkingSpeed = 0;
+	double walkingSpeed = 0;
+	//Temporary statistic variables
+	long timestampGroundFloor = 0;
+	long timestampAttic = 0;
 	
 	//Define beacon identifiers
     public List<BeaconIdentifier> beacons = new ArrayList<BeaconIdentifier>();
     public List<DistanceRule> distanceRules = new ArrayList<DistanceRule>();
 	
 	public void defineBeaconList() {
-		beacons.add(new BeaconIdentifier("EA:4B:01:B6:4C:F5", "COFFEEMACHINE", new int[] {1, 0, 0}));
-		beacons.add(new BeaconIdentifier("D4:23:26:59:34:AD", "PAARS", new int[] {5, 10, 10}));
-		beacons.add(new BeaconIdentifier("D8:38:9B:3F:55:F8", "BLAUW", new int[] {10, 0, 0}));
+		beacons.add(new BeaconIdentifier("EA:4B:01:B6:4C:F5", "COFFEEMACHINE", new int[] {1, 0, 0})); //GROEN
+		beacons.add(new BeaconIdentifier("D4:23:26:59:34:AD", "HALL", new int[] {5, 10, 10})); //PAARS
+		beacons.add(new BeaconIdentifier("D8:38:9B:3F:55:F8", "ATTIC", new int[] {10, 0, 0})); //BLAUW
 		
-		distanceRules.add(new DistanceRule(getBeaconByName("COFFEEMACHINE"), getBeaconByName("PAARS"), 100));
+		distanceRules.add(new DistanceRule(getBeaconByName("COFFEEMACHINE"), getBeaconByName("ATTIC"), 50));
+		distanceRules.add(new DistanceRule(getBeaconByName("HALL"), getBeaconByName("ATTIC"), 34));
 	}
 	
 	public BeaconIdentifier getBeaconByName(String name) {
@@ -171,6 +175,11 @@ public class BackgroundService extends Service {
 							closestBeacon = getClosestBeacon();
 						}
 						
+						//Save timestamp for walking speed calculation
+						if (closestBeacon.name.equals("HALL")) {
+							timestampGroundFloor = System.currentTimeMillis();
+						}
+						
 						if (closestBeacon.MAC.equals(getClosestBeacon().MAC) == false) {
 							//New closest beacon found!
 							//Call onFoundNewClosestBeacon()
@@ -200,7 +209,7 @@ public class BackgroundService extends Service {
 					request.walkedDistance = (int) walkedDistance;
 					request.coffeeMachineCount = coffeeMachineCount;
 					request.seenSurface = seenSurfaceBeacons.size() * 100 / beacons.size();
-					request.walkingSpeed = walkingSpeed;
+					request.walkingSpeed = (int) (walkingSpeed * 1000);
 
 					try {
 						SoapResult result = (SoapResult) new SendSoapRequest().execute(request).get();
@@ -242,7 +251,7 @@ public class BackgroundService extends Service {
 					editor.putString("lastSave", dateFormat.format(date));
 					editor.putInt("walkedDistance", (int) walkedDistance);
 					editor.putInt("coffeeMachineCount", coffeeMachineCount);
-					editor.putInt("walkingSpeed", walkingSpeed);
+					editor.putInt("walkingSpeed", (int) (walkingSpeed * 1000));
 					
 					String seenSurfaceString = "";
 					for (BeaconIdentifier bcn : seenSurfaceBeacons) {
@@ -265,11 +274,27 @@ public class BackgroundService extends Service {
 	public void onFoundNewClosestBeacon(BeaconIdentifier oldBeacon, BeaconIdentifier newBeacon) {
 		double localWalkedDistance = calculateDistance(oldBeacon, newBeacon);
 		
-		System.out.println("NEW CLOSEST BEACON FOUND! Distance walked: " + localWalkedDistance);
+		System.out.println("NEW CLOSEST BEACON FOUND: " + newBeacon.name + ", Distance walked: " + localWalkedDistance);
 		
 		//Update statistics
 		if (newBeacon.name.equals("COFFEEMACHINE")) {
 			coffeeMachineCount++;
+		}
+		
+		//Calculate walking speed
+		if (newBeacon.name.equals("ATTIC")) {
+			timestampAttic = System.currentTimeMillis();
+			
+			if (timestampGroundFloor != 0) {
+				long difference = timestampAttic - timestampGroundFloor;
+				difference = difference / 1000;
+				double localWalkingSpeed = calculateDistance(getBeaconByName("HALL"), getBeaconByName("ATTIC")) / difference * 3.6;
+				if (localWalkingSpeed > walkingSpeed) {
+					walkingSpeed = localWalkingSpeed;
+					
+					System.out.println("NEW HIGHSCORE WALKINGSPEED: " + walkingSpeed);
+				}
+			}
 		}
 		
 		//Seensurface
@@ -320,7 +345,7 @@ public class BackgroundService extends Service {
 		    walkedDistance = Double.parseDouble(settings.getInt("walkedDistance", 0) + "");
 		    coffeeMachineCount = settings.getInt("coffeeMachineCount", 0);
 		    String seenSurfaceString = settings.getString("seenSurfaceString", "");
-		    walkingSpeed = settings.getInt("walkingSpeed", 0);
+		    walkingSpeed = Double.parseDouble(settings.getInt("walkingSpeed", 0) + "") / 1000;
 		    
 		    //Parse string to surfaceBeaconArray
 		    String[] seenSurfaceArray = seenSurfaceString.split("-");
