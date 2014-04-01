@@ -76,7 +76,7 @@ public class SendSoapRequest extends AsyncTask<SoapRequest, String, SoapResult> 
 					return resultObject;
 				}
 				
-				if (soaprequest[0] instanceof SoapRequest_registerUser) {
+				if (soaprequest[0] instanceof SoapRequest_registerUser || soaprequest[0] instanceof SoapRequest_updateStatistics) {
 					SoapResult resultObject = new SoapResult();
 					
 					if (result.getProperty(0) instanceof Vector) {

@@ -37,7 +37,6 @@ public class BackgroundService extends Service {
 	boolean statisticsReset = false;
 	double walkedDistance = 0;
 	int coffeeMachineCount = 0;
-	int seenSurface = 0;
 	List<BeaconIdentifier> seenSurfaceBeacons = new ArrayList<BeaconIdentifier>();
 	int walkingSpeed = 0;
 	
@@ -199,7 +198,7 @@ public class BackgroundService extends Service {
 					request.userAndroidId = userAndroidId;
 					request.walkedDistance = (int) walkedDistance;
 					request.coffeeMachineCount = coffeeMachineCount;
-					request.seenSurface = seenSurface;
+					request.seenSurface = seenSurfaceBeacons.size() * 100 / beacons.size();
 					request.walkingSpeed = walkingSpeed;
 
 					try {
@@ -228,7 +227,7 @@ public class BackgroundService extends Service {
 							walkedDistance = 0;
 							walkingSpeed = 0;
 							coffeeMachineCount = 0;
-							seenSurface = 0;
+							seenSurfaceBeacons.clear();
 						}
 					} else {
 						statisticsReset = false;
@@ -253,6 +252,17 @@ public class BackgroundService extends Service {
 		//Update statistics
 		if (newBeacon.name.equals("COFFEEMACHINE")) {
 			coffeeMachineCount++;
+		}
+		
+		//Seensurface
+		boolean foundBeacon = false;
+		for (BeaconIdentifier bcn : seenSurfaceBeacons) {
+			if (bcn.MAC.equals(newBeacon.MAC)) {
+				foundBeacon = true;
+			}
+		}
+		if (foundBeacon == false) {
+			seenSurfaceBeacons.add(newBeacon);
 		}
 		
 		walkedDistance += localWalkedDistance;
