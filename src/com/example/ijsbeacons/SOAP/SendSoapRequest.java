@@ -33,6 +33,14 @@ public class SendSoapRequest extends AsyncTask<SoapRequest, String, SoapResult> 
 			request.addProperty("userAndroidId", ((SoapRequest_registerUser) soaprequest[0]).userAndroidId);
 			request.addProperty("userName", ((SoapRequest_registerUser) soaprequest[0]).userName);
 		}
+		if (soaprequest[0] instanceof SoapRequest_updateStatistics) {
+			//Paramaters
+			request.addProperty("userAndroidId", ((SoapRequest_updateStatistics) soaprequest[0]).userAndroidId);
+			request.addProperty("coffeeMachineCount", ((SoapRequest_updateStatistics) soaprequest[0]).coffeeMachineCount);
+			request.addProperty("walkedDistance", ((SoapRequest_updateStatistics) soaprequest[0]).walkedDistance);
+			request.addProperty("seenSurface", ((SoapRequest_updateStatistics) soaprequest[0]).seenSurface);
+			request.addProperty("walkingSpeed", ((SoapRequest_updateStatistics) soaprequest[0]).walkingSpeed);
+		}
 		
 		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
 				SoapEnvelope.VER11);
