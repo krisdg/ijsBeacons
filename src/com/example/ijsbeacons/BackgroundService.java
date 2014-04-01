@@ -2,6 +2,7 @@ package com.example.ijsbeacons;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.provider.Settings.Secure;
@@ -233,6 +234,23 @@ public class BackgroundService extends Service {
 						statisticsReset = false;
 					}
 					
+					//Save statistics
+					dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+					SharedPreferences settings = getSharedPreferences("ijsBeaconsStats", 0);
+					SharedPreferences.Editor editor = settings.edit();
+					editor.putString("lastSave", dateFormat.format(date));
+					editor.putInt("walkedDistance", (int) walkedDistance);
+					editor.putInt("coffeeMachineCount", coffeeMachineCount);
+					editor.putInt("walkingSpeed", walkingSpeed);
+					
+					String seenSurfaceString = "";
+					for (BeaconIdentifier bcn : seenSurfaceBeacons) {
+						seenSurfaceString += bcn.MAC + "-";
+					}
+					
+					editor.putString("seenSurfaceString", seenSurfaceString);
+					editor.commit();
 				}
 			} catch (InterruptedException e) {
 			}
@@ -290,6 +308,29 @@ public class BackgroundService extends Service {
 	@Override
 	public void onStart(Intent intent, int startId) {
 		isRunning = true;
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+
+		//Restore statistics
+	    SharedPreferences settings = getSharedPreferences("ijsBeaconsStats", 0);
+	    String lastSave = settings.getString("lastSave", "");
+		    
+		if (dateFormat.format(date).equals(lastSave)) {
+		    walkedDistance = Double.parseDouble(settings.getInt("walkedDistance", 0) + "");
+		    coffeeMachineCount = settings.getInt("coffeeMachineCount", 0);
+		    String seenSurfaceString = settings.getString("seenSurfaceString", "");
+		    walkingSpeed = settings.getInt("walkingSpeed", 0);
+		    
+		    //Parse string to surfaceBeaconArray
+		    String[] seenSurfaceArray = seenSurfaceString.split("-");
+		    for(String MAC : seenSurfaceArray) {
+		    	if (MAC.length() == 17) {
+		    		if (getBeacon(MAC) != null)
+		    			seenSurfaceBeacons.add(getBeacon(MAC));
+		    	}
+		    }
+		}
 
 		System.out.println("SERVICE STARTED");
 		Toast.makeText(this, " Service Started", Toast.LENGTH_SHORT).show();
