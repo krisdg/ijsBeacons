@@ -1,5 +1,7 @@
 package com.example.ijsbeacons.SOAP;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 import org.ksoap2.SoapEnvelope;
@@ -23,10 +25,14 @@ public class SendSoapRequest extends AsyncTask<SoapRequest, String, SoapResult> 
 		METHOD_NAME = ((SoapRequest) soaprequest[0]).METHOD_NAME;
 		SOAP_ACTION += METHOD_NAME;
 		request = new SoapObject(NAMESPACE, METHOD_NAME);
-				
+
 		if (soaprequest[0] instanceof SoapRequest_getUserByAndroidId) {
 			//Parameters
 			request.addProperty("userAndroidId", ((SoapRequest_getUserByAndroidId) soaprequest[0]).userAndroidId);
+		}
+		if (soaprequest[0] instanceof SoapRequest_getPersonalStatistics) {
+			//Parameters
+			request.addProperty("userAndroidId", ((SoapRequest_getPersonalStatistics) soaprequest[0]).userAndroidId);
 		}
 		if (soaprequest[0] instanceof SoapRequest_registerUser) {
 			//Paramaters
@@ -54,7 +60,7 @@ public class SendSoapRequest extends AsyncTask<SoapRequest, String, SoapResult> 
 	
 				System.out.println(envelope.bodyIn.toString());
 				SoapObject result = (SoapObject) envelope.bodyIn;
-		
+
 				if (soaprequest[0] instanceof SoapRequest_getUserByAndroidId) {
 					SoapResult_getUser resultObject = new SoapResult_getUser();
 					
@@ -70,6 +76,67 @@ public class SendSoapRequest extends AsyncTask<SoapRequest, String, SoapResult> 
 							resultObject.userName = soapresult.get(4).toString();
 							resultObject.userLastActivity = Integer.parseInt(soapresult.get(5).toString());
 							resultObject.userFirstActivity = Integer.parseInt(soapresult.get(6).toString());
+						}
+					}
+
+					return resultObject;
+				}
+
+				if (soaprequest[0] instanceof SoapRequest_getPersonalStatistics) {
+					/**
+					 *  TO-DO: aanpassen naar getPersonalStatistics
+					 */
+					int counter = 0;
+					String[] aNames = {
+							"CoffeeMachineDay",
+							"WalkedDistanceDay",
+							"SeenSurfaceDay",
+							"WalkingSpeedDay",
+
+							"CoffeeMachineMonth",
+							"WalkedDistanceMonth",
+							"SeenSurfaceMonth",
+							"WalkingSpeedMonth",
+					};
+
+					SoapResult_getPersonalStatistics resultObject = new SoapResult_getPersonalStatistics();
+					
+					if (result.getProperty(0) instanceof Vector) {
+						Vector soapresult = (Vector)result.getProperty(0);
+						
+						resultObject.resultCode = Integer.parseInt(soapresult.get(0).toString());
+						resultObject.resultMessage = soapresult.get(1).toString();
+						
+						if (resultObject.resultCode == 1)
+						{
+							Map<String, Integer> aValue = new HashMap<String, Integer>();
+							int tempVal;
+							System.out.println("Dingen");
+							System.out.println();
+							System.out.println("Dingenn");
+							if( (Map)soapresult.get(2) instanceof Map )
+							{
+								for( String name : aNames )
+								{
+									tempVal = (Integer) ((Vector) soapresult.get(2)).get(counter);
+									aValue.put(name, tempVal);
+									counter++;
+								}
+							}
+							counter = 0;
+
+							if( soapresult.get(3) instanceof Map )
+							{
+								for( String name : aNames )
+								{
+									if( (counter + 4) < 4 ) continue;
+									tempVal = (Integer) ((Vector) soapresult.get(3)).get(counter);
+									aValue.put(name, tempVal);
+									counter++;
+								}
+							}
+							
+							resultObject.aValue = aValue;
 						}
 					}
 
