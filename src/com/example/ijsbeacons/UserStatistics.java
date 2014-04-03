@@ -28,8 +28,7 @@ public class UserStatistics extends Fragment {
 			SoapRequest_getPersonalStatistics getPersonalStatisticsObject = new SoapRequest_getPersonalStatistics();
 			getPersonalStatisticsObject.userAndroidId = ((IJsBeaconsApplication) getActivity().getApplication()).getUserAndroidId();
 
-			SoapResult_getPersonalStatistics result = (SoapResult_getPersonalStatistics) new SendSoapRequest().execute(
-					getPersonalStatisticsObject).get();
+			SoapResult_getPersonalStatistics result = (SoapResult_getPersonalStatistics) new SendSoapRequest().execute(getPersonalStatisticsObject).get();
 			
 			Toast.makeText(getActivity(), result.resultMessage, Toast.LENGTH_SHORT).show();
 

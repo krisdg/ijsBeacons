@@ -55,44 +55,6 @@
         android:text="TextView" />
 
     <TextView
-        android:id="@+id/tvWalkedDistanceDay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tvWalkedDistanceLabel"
-        android:layout_toRightOf="@+id/textView1"
-        android:text="Medium Text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/tvSeenSurfaceDay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tvSeenSurfaceLabel"
-        android:layout_toRightOf="@+id/textView1"
-        android:text="Medium Text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/tvWalkingSpeedDay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/tvWalkingSpeedLabel"
-        android:layout_alignBottom="@+id/tvWalkingSpeedLabel"
-        android:layout_toRightOf="@+id/textView1"
-        android:text="Medium Text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/tvDayLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/tvCoffeeMachineDay"
-        android:layout_alignLeft="@+id/tvCoffeeMachineDay"
-        android:layout_marginBottom="18dp"
-        android:text="Dag"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
         android:id="@+id/tvMonthLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -107,7 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/tvWalkedDistanceLabel"
-        android:layout_marginLeft="28dp"
+        android:layout_marginLeft="35dp"
         android:layout_toRightOf="@+id/tvDayLabel"
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -143,20 +105,57 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/anchorCenter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
     <TextView
+        android:id="@+id/tvDayLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvCoffeeMachineMonth"
+        android:layout_centerHorizontal="true"
+        android:text="Dag"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
         android:id="@+id/tvCoffeeMachineDay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/tvWalkedDistanceLabel"
-        android:layout_toRightOf="@+id/textView1"
+        android:layout_alignLeft="@+id/tvDayLabel"
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
+    <TextView
+        android:id="@+id/tvWalkedDistanceDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvSeenSurfaceLabel"
+        android:layout_alignLeft="@+id/tvCoffeeMachineDay"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/tvSeenSurfaceDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvSeenSurfaceLabel"
+        android:layout_alignBottom="@+id/tvSeenSurfaceLabel"
+        android:layout_alignLeft="@+id/tvWalkedDistanceDay"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/tvWalkingSpeedDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvWalkingSpeedLabel"
+        android:layout_alignBottom="@+id/tvWalkingSpeedLabel"
+        android:layout_alignLeft="@+id/tvSeenSurfaceDay"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>
