@@ -35,29 +35,43 @@ public class UserStatistics extends Fragment {
 
 			if (result.resultCode == 1)
 			{
-		        TextView tvCoffeeMachineDay = (TextView) v.findViewById(R.id.tvCoffeeMachineDay);
-		        tvCoffeeMachineDay.setText(result.dayStatistics[0]);
+		        TextView tvCoffeeMachineLabel = (TextView) v.findViewById(R.id.tvCoffeeMachineLabel);
+		        tvCoffeeMachineLabel.setText("Koffie");
+		        
+		        TextView tvWalkedDistanceLabel = (TextView) v.findViewById(R.id.tvWalkedDistanceLabel);
+		        tvWalkedDistanceLabel.setText("Afgelegde afstand");
 
+		        TextView tvSeenSurfaceLabel = (TextView) v.findViewById(R.id.tvSeenSurfaceLabel);
+		        tvSeenSurfaceLabel.setText("% Gezien");
+
+		        TextView tvWalkingSpeedLabel = (TextView) v.findViewById(R.id.tvWalkingSpeedLabel);
+		        tvWalkingSpeedLabel.setText("Snelheidsrecord");
+		        
+
+		        TextView tvCoffeeMachineDay = (TextView) v.findViewById(R.id.tvCoffeeMachineDay);
+		        tvCoffeeMachineDay.setText(result.dayStatistics[0] + "");
+		        
 		        TextView tvWalkedDistanceDay = (TextView) v.findViewById(R.id.tvWalkedDistanceDay);
-		        tvWalkedDistanceDay.setText(result.dayStatistics[1]);
+		        tvWalkedDistanceDay.setText(result.dayStatistics[1] + " m");
 
 		        TextView tvSeenSurfaceDay = (TextView) v.findViewById(R.id.tvSeenSurfaceDay);
-		        tvSeenSurfaceDay.setText(result.dayStatistics[2]);
+		        tvSeenSurfaceDay.setText(result.dayStatistics[2] + " %");
 
 		        TextView tvWalkingSpeedDay = (TextView) v.findViewById(R.id.tvWalkingSpeedDay);
-		        tvWalkingSpeedDay.setText(result.dayStatistics[3]);
+		        tvWalkingSpeedDay.setText(result.dayStatistics[3] + " km/u");
+		        
 
 		        TextView tvCoffeeMachineMonth = (TextView) v.findViewById(R.id.tvCoffeeMachineMonth);
-		        tvCoffeeMachineMonth.setText(result.monthStatistics[0]);
+		        tvCoffeeMachineMonth.setText(result.monthStatistics[0] + "");
 
 		        TextView tvWalkedDistanceMonth = (TextView) v.findViewById(R.id.tvWalkedDistanceMonth);
-		        tvWalkedDistanceMonth.setText(result.monthStatistics[1]);
+		        tvWalkedDistanceMonth.setText(result.monthStatistics[1] + " m");
 
 		        TextView tvSeenSurfaceMonth = (TextView) v.findViewById(R.id.tvSeenSurfaceMonth);
-		        tvSeenSurfaceMonth.setText(result.monthStatistics[2]);
+		        tvSeenSurfaceMonth.setText(result.monthStatistics[2] + " %");
 
 		        TextView tvWalkingSpeedMonth = (TextView) v.findViewById(R.id.tvWalkingSpeedMonth);
-		        tvWalkingSpeedMonth.setText(result.monthStatistics[3]);
+		        tvWalkingSpeedMonth.setText(result.monthStatistics[3] + " km/u");
 
 			}
 		} catch (InterruptedException e) {

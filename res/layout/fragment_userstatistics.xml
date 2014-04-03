@@ -15,6 +15,16 @@
         android:textSize="26dp" />
 
     <TextView
+        android:id="@+id/tvCoffeeMachineLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvFragFirst"
+        android:layout_below="@+id/tvFragFirst"
+        android:layout_marginTop="77dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="TextView" />
+		
+    <TextView
         android:id="@+id/tvWalkedDistanceLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,37 +48,18 @@
         android:id="@+id/tvWalkingSpeedLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/tvSeenSurfaceLabel"
+        android:layout_alignLeft="@+id/tvSeenSurfaceLabel"
         android:layout_below="@+id/tvSeenSurfaceLabel"
         android:layout_marginTop="18dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="TextView" />
 
     <TextView
-        android:id="@+id/tvCoffeeMachineLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvFragFirst"
-        android:layout_below="@+id/tvFragFirst"
-        android:layout_marginTop="77dp"
-        android:text="TextView"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/tvCoffeeMachineDay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/tvWalkedDistanceLabel"
-        android:layout_toRightOf="@+id/tvFragFirst"
-        android:text="Medium Text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
         android:id="@+id/tvWalkedDistanceDay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/tvWalkedDistanceLabel"
-        android:layout_alignRight="@+id/tvCoffeeMachineDay"
+        android:layout_toRightOf="@+id/textView1"
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -77,7 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/tvSeenSurfaceLabel"
-        android:layout_alignRight="@+id/tvWalkedDistanceDay"
+        android:layout_toRightOf="@+id/textView1"
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -87,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/tvWalkingSpeedLabel"
         android:layout_alignBottom="@+id/tvWalkingSpeedLabel"
-        android:layout_alignRight="@+id/tvSeenSurfaceDay"
+        android:layout_toRightOf="@+id/textView1"
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -150,5 +141,22 @@
         android:layout_alignLeft="@+id/tvSeenSurfaceMonth"
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/tvCoffeeMachineDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvWalkedDistanceLabel"
+        android:layout_toRightOf="@+id/textView1"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
 
 </RelativeLayout>
