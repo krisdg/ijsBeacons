@@ -89,9 +89,6 @@ public class SendSoapRequest extends AsyncTask<SoapRequest, String, SoapResult> 
 
 				if (soaprequest[0] instanceof SoapRequest_getPersonalStatistics) {
 					int counter = 0;
-					
-//					int[] dayStatistics = new int[4]; //CoffeeMachineDay, WalkedDistanceDay, SeenSurfaceDay, WalkingSpeedDay
-//					int[] monthStatistics = new int[4]; //CoffeeMachineMonth, WalkedDistanceMonth, SeenSurfaceMonth, WalkingSpeedMonth
 
 					SoapResult_getPersonalStatistics resultObject = new SoapResult_getPersonalStatistics();
 					
@@ -123,9 +120,6 @@ public class SendSoapRequest extends AsyncTask<SoapRequest, String, SoapResult> 
 					
 					// true is user, false is statistic number
 					boolean user = true;
-					
-//					int[] dayStatistics = new int[4]; //CoffeeMachineDay, WalkedDistanceDay, SeenSurfaceDay, WalkingSpeedDay
-//					int[] monthStatistics = new int[4]; //CoffeeMachineMonth, WalkedDistanceMonth, SeenSurfaceMonth, WalkingSpeedMonth
 
 					SoapResult_getToplist resultObject = new SoapResult_getToplist();
 					

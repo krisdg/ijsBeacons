@@ -1,5 +1,6 @@
 package com.example.ijsbeacons;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableLayout.LayoutParams;
 import android.widget.TableRow;
@@ -38,8 +40,7 @@ public class Toplist extends Fragment implements OnClickListener
 
 			SoapResult_getToplist result = (SoapResult_getToplist) new SendSoapRequest().execute(getToplist).get();
 			
-			Toast.makeText(getActivity(), result.resultMessage, Toast.LENGTH_SHORT).show();
-			
+//			Toast.makeText(getActivity(), result.resultMessage, Toast.LENGTH_SHORT).show();
 			
 			//Set title
 	        TableLayout table = (TableLayout) v.findViewById(R.id.TopListTable);
@@ -65,16 +66,32 @@ public class Toplist extends Fragment implements OnClickListener
 		        	if (user != null) {
 		        		TableRow row = new TableRow(this.getActivity());
 
-				        TextView txt_index = new TextView(this.getActivity());       
-				        txt_index.setText(String.valueOf(counter + 1));
-				        txt_index.setTextSize(20);
-				        txt_index.setGravity(Gravity.LEFT);
-				        txt_index.setPadding(50, 20, 0, 0);
+		        		if (counter < 3) {
+		        			ImageView img_index = new ImageView(this.getActivity());
+		        			if (counter == 0) {
+			        			img_index.setImageDrawable(v.getResources().getDrawable(R.drawable.gold));
+		        			}
+		        			if (counter == 1) {
+			        			img_index.setImageDrawable(v.getResources().getDrawable(R.drawable.silver));
+		        			}
+		        			if (counter == 2) {
+			        			img_index.setImageDrawable(v.getResources().getDrawable(R.drawable.bronze));
+		        			}
+		        			img_index.setPadding(35, 20, 0, 0);
+					        row.addView(img_index);
+		        		} else {
+		        			TextView txt_index = new TextView(this.getActivity());       
+		        			txt_index.setText(String.valueOf(counter + 1));
+		        			txt_index.setTextSize(20);
+		        			txt_index.setGravity(Gravity.LEFT);
+		        			txt_index.setPadding(50, 20, 0, 0);
+					        row.addView(txt_index);
+		        		}
 				        
 				        TextView txt_user = new TextView(this.getActivity());       
 				        txt_user.setText(user);
 				        txt_user.setTextSize(20);
-				        txt_user.setPadding(30, 0, 0, 0);
+				        txt_user.setPadding(30, 20, 0, 0);
 				        txt_user.setGravity(Gravity.LEFT);
 
 				        String unit = getArguments().getString("units");
@@ -83,12 +100,15 @@ public class Toplist extends Fragment implements OnClickListener
 				        }
 				        
 				        TextView txt_score = new TextView(this.getActivity());
-				        txt_score.setText(result.dayStatistics[counter] + unit);
+				        if (unit.equals("km/u")) {
+					        txt_score.setText(new DecimalFormat("#.#").format((float)result.dayStatistics[counter] / 1000) + unit);
+				        } else {
+					        txt_score.setText(result.dayStatistics[counter] + unit);
+				        }
 				        txt_score.setTextSize(20);
-				        txt_score.setPadding(0, 0, 50, 0);
+				        txt_score.setPadding(0, 20, 50, 0);
 				        txt_score.setGravity(Gravity.RIGHT);
 
-				        row.addView(txt_index);
 				        row.addView(txt_user);
 				        row.addView(txt_score);
 
@@ -118,17 +138,33 @@ public class Toplist extends Fragment implements OnClickListener
 		        for (String user : result.userMonth) {
 		        	if (user != null) {
 		        		TableRow row = new TableRow(this.getActivity());
-
-				        TextView txt_index = new TextView(this.getActivity());       
-				        txt_index.setText(String.valueOf(counter + 1));
-				        txt_index.setTextSize(20);
-				        txt_index.setGravity(Gravity.LEFT);
-				        txt_index.setPadding(50, 20, 0, 0);
+		        		
+		        		if (counter < 3) {
+		        			ImageView img_index = new ImageView(this.getActivity());
+		        			if (counter == 0) {
+			        			img_index.setImageDrawable(v.getResources().getDrawable(R.drawable.gold));
+		        			}
+		        			if (counter == 1) {
+			        			img_index.setImageDrawable(v.getResources().getDrawable(R.drawable.silver));
+		        			}
+		        			if (counter == 2) {
+			        			img_index.setImageDrawable(v.getResources().getDrawable(R.drawable.bronze));
+		        			}
+		        			img_index.setPadding(35, 20, 0, 0);
+					        row.addView(img_index);
+		        		} else {
+		        			TextView txt_index = new TextView(this.getActivity());       
+		        			txt_index.setText(String.valueOf(counter + 1));
+		        			txt_index.setTextSize(20);
+		        			txt_index.setGravity(Gravity.LEFT);
+		        			txt_index.setPadding(50, 20, 0, 0);
+					        row.addView(txt_index);
+		        		}
 				        
 				        TextView txt_user = new TextView(this.getActivity());       
 				        txt_user.setText(user);
 				        txt_user.setTextSize(20);
-				        txt_user.setPadding(30, 0, 0, 0);
+				        txt_user.setPadding(30, 20, 0, 0);
 				        txt_user.setGravity(Gravity.LEFT);
 
 				        String unit = getArguments().getString("units");
@@ -137,12 +173,15 @@ public class Toplist extends Fragment implements OnClickListener
 				        }
 				        
 				        TextView txt_score = new TextView(this.getActivity());
-				        txt_score.setText(result.monthStatistics[counter] + unit);
+				        if (unit.equals(" km/u")) {
+					        txt_score.setText(new DecimalFormat("#.#").format((float)result.monthStatistics[counter] / 1000) + unit);
+				        } else {
+					        txt_score.setText(result.monthStatistics[counter] + unit);
+				        }
 				        txt_score.setTextSize(20);
-				        txt_score.setPadding(0, 0, 50, 0);
+				        txt_score.setPadding(0, 20, 50, 0);
 				        txt_score.setGravity(Gravity.RIGHT);
 		        		
-				        row.addView(txt_index);
 				        row.addView(txt_user);
 				        row.addView(txt_score);
 

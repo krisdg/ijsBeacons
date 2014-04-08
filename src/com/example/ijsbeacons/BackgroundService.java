@@ -186,6 +186,17 @@ public class BackgroundService extends Service {
 							onFoundNewClosestBeacon(closestBeacon, getClosestBeacon());
 							closestBeacon = getClosestBeacon();
 						}
+						
+						//Seen surface
+						boolean foundBeacon = false;
+						for (BeaconIdentifier bcn : seenSurfaceBeacons) {
+							if (bcn.MAC.equals(closestBeacon.MAC)) {
+								foundBeacon = true;
+							}
+						}
+						if (foundBeacon == false) {
+							seenSurfaceBeacons.add(closestBeacon);
+						}
 					}
 
 					System.out.println("[BEACON IDENTIFIERS]END");
@@ -297,17 +308,6 @@ public class BackgroundService extends Service {
 			}
 		}
 		
-		//Seen surface
-		boolean foundBeacon = false;
-		for (BeaconIdentifier bcn : seenSurfaceBeacons) {
-			if (bcn.MAC.equals(newBeacon.MAC)) {
-				foundBeacon = true;
-			}
-		}
-		if (foundBeacon == false) {
-			seenSurfaceBeacons.add(newBeacon);
-		}
-		
 		walkedDistance += localWalkedDistance;
 	}
 
@@ -348,13 +348,20 @@ public class BackgroundService extends Service {
 		    walkingSpeed = Double.parseDouble(settings.getInt("walkingSpeed", 0) + "") / 1000;
 		    
 		    //Parse string to surfaceBeaconArray
-		    String[] seenSurfaceArray = seenSurfaceString.split("-");
-		    for(String MAC : seenSurfaceArray) {
-		    	if (MAC.length() == 17) {
-		    		if (getBeacon(MAC) != null)
-		    			seenSurfaceBeacons.add(getBeacon(MAC));
-		    	}
-		    }
+			String[] seenSurfaceArray = seenSurfaceString.split("-");
+			for (String MAC : seenSurfaceArray) {
+				if (MAC.length() == 17 && getBeacon(MAC) != null) {
+					boolean foundBeacon = false;
+					for (BeaconIdentifier bcn : seenSurfaceBeacons) {
+						if (bcn.MAC.equals(MAC)) {
+							foundBeacon = true;
+						}
+					}
+					if (foundBeacon == false) {
+						seenSurfaceBeacons.add(getBeacon(MAC));
+					}
+				}
+			}
 		}
 
 		System.out.println("SERVICE STARTED");
