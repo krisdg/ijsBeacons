@@ -1,5 +1,6 @@
 package com.example.ijsbeacons;
 
+import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
@@ -51,7 +52,7 @@ public class UserStatistics extends Fragment {
 
 	        table.addView(row_day,new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 	        
-	        String[] prettyNames = {"Koffie", "Afgelegde afstand", "% gezien", "Snelheidsrecord"};
+	        String[] prettyNames = {"Koffie gehaald", "Gelopen afstand", "% gezien", "Snelheidsrecord"};
 	        String[] units = {"", " m", " %", " km/u"};
 
 			if (result.resultCode == 1)
@@ -87,29 +88,31 @@ public class UserStatistics extends Fragment {
 			        txt_index.setGravity(Gravity.LEFT);
 			        txt_index.setPadding(50, 50, 0, 0);
 
-			        TextView txt_user = new TextView(this.getActivity());       
-			        txt_user.setText(result.dayStatistics[i] + units[i]);
-			        txt_user.setTextSize(20);
-			        txt_user.setPadding(30, 0, 0, 50);
-			        txt_user.setGravity(Gravity.LEFT);
-			        
-			        int toShow = result.monthStatistics[i];
-			        if(i == 2)
+			        String toShow = String.valueOf(result.dayStatistics[i]);
+			        if(i == 3)
 			        {
-			        	if( toShow > 100 )
-			        	{
-			        		toShow = 100;
-			        	}
+			        	toShow = new DecimalFormat("#.#").format((float)result.dayStatistics[i] / 1000);
 			        }
-			        TextView txt_score = new TextView(this.getActivity());
-			        txt_score.setText(toShow + units[i]);
-			        txt_score.setTextSize(20);
-			        txt_score.setPadding(0, 50, 50, 0);
-			        txt_score.setGravity(Gravity.LEFT);
+			        TextView txt_dayscore = new TextView(this.getActivity());       
+			        txt_dayscore.setText(toShow + units[i]);
+			        txt_dayscore.setTextSize(20);
+			        txt_dayscore.setPadding(30, 0, 0, 50);
+			        txt_dayscore.setGravity(Gravity.LEFT);
+			        
+			        toShow = String.valueOf(result.monthStatistics[i]);
+			        if(i == 3)
+			        {
+			        	toShow = new DecimalFormat("#.#").format((float)result.monthStatistics[i] / 1000);
+			        }
+			        TextView txt_monthscore = new TextView(this.getActivity());
+			        txt_monthscore.setText(toShow + units[i]);
+			        txt_monthscore.setTextSize(20);
+			        txt_monthscore.setPadding(0, 50, 50, 0);
+			        txt_monthscore.setGravity(Gravity.LEFT);
 
 			        row.addView(txt_index);
-			        row.addView(txt_user);
-			        row.addView(txt_score);
+			        row.addView(txt_dayscore);
+			        row.addView(txt_monthscore);
 
 			        table.addView(row,new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1));
 	        	

@@ -35,28 +35,14 @@ public final class R {
     public static final class id {
         public static final int ScrollView01=0x7f080007;
         public static final int TopListTable=0x7f080008;
-        public static final int action_settings=0x7f080019;
-        public static final int anchorCenter=0x7f080017;
+        public static final int UserStatisticsTable=0x7f08000a;
+        public static final int action_settings=0x7f08000b;
         public static final int but_close=0x7f080004;
         public static final int but_register=0x7f080003;
         public static final int container=0x7f080000;
         public static final int progressBar1=0x7f080006;
+        public static final int svUserStatistics=0x7f080009;
         public static final int textView1=0x7f080001;
-        public static final int tvCoffeeMachineDay=0x7f080018;
-        public static final int tvCoffeeMachineLabel=0x7f08000a;
-        public static final int tvCoffeeMachineMonth=0x7f080010;
-        public static final int tvDayLabel=0x7f08000f;
-        public static final int tvFragFirst=0x7f080009;
-        public static final int tvMonthLabel=0x7f08000e;
-        public static final int tvSeenSurfaceDay=0x7f080014;
-        public static final int tvSeenSurfaceLabel=0x7f08000c;
-        public static final int tvSeenSurfaceMonth=0x7f080013;
-        public static final int tvWalkedDistanceDay=0x7f080012;
-        public static final int tvWalkedDistanceLabel=0x7f08000b;
-        public static final int tvWalkedDistanceMonth=0x7f080011;
-        public static final int tvWalkingSpeedDay=0x7f080016;
-        public static final int tvWalkingSpeedLabel=0x7f08000d;
-        public static final int tvWalkingSpeedMonth=0x7f080015;
         public static final int username=0x7f080002;
         public static final int viewPager=0x7f080005;
     }
