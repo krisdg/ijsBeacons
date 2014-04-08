@@ -9,11 +9,15 @@ import com.example.ijsbeacons.SOAP.*;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.TableLayout.LayoutParams;
 
 public class UserStatistics extends Fragment {
 
@@ -21,8 +25,8 @@ public class UserStatistics extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_userstatistics, container, false);
 
-        TextView tv = (TextView) v.findViewById(R.id.tvFragFirst);
-        tv.setText(getArguments().getString("msg"));
+//        TextView tv = (TextView) v.findViewById(R.id.tvFragFirst);
+//        tv.setText(getArguments().getString("msg"));
 
 		try {
 			SoapRequest_getPersonalStatistics getPersonalStatisticsObject = new SoapRequest_getPersonalStatistics();
@@ -32,47 +36,86 @@ public class UserStatistics extends Fragment {
 			
 			Toast.makeText(getActivity(), result.resultMessage, Toast.LENGTH_SHORT).show();
 
+	        TableLayout table = (TableLayout) v.findViewById(R.id.UserStatisticsTable);
+	        TableRow.LayoutParams params_title = new TableRow.LayoutParams();
+	        params_title.span = 3;
+
+	        TableRow row_day = new TableRow(this.getActivity());
+
+	        TextView title_day = new TextView(this.getActivity());       
+	        title_day.setText(getArguments().getString("msg"));
+	        title_day.setTextSize(26);
+	        title_day.setPadding(50, 50, 0, 0);
+
+	        row_day.addView(title_day, params_title);
+
+	        table.addView(row_day,new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+	        
+	        String[] prettyNames = {"Koffie", "Afgelegde afstand", "% gezien", "Snelheidsrecord"};
+	        String[] units = {"", " m", " %", " km/u"};
+
 			if (result.resultCode == 1)
 			{
-		        TextView tvCoffeeMachineLabel = (TextView) v.findViewById(R.id.tvCoffeeMachineLabel);
-		        tvCoffeeMachineLabel.setText("Koffie");
+		        TextView txt_empty = new TextView(this.getActivity());       
+		        txt_empty.setText("");
+
+		        TextView txt_month = new TextView(this.getActivity());       
+		        txt_month.setText("Dag");
+		        txt_month.setTextSize(20);
+		        txt_month.setPadding(30, 50, 0, 0);
+		        txt_month.setGravity(Gravity.LEFT);
 		        
-		        TextView tvWalkedDistanceLabel = (TextView) v.findViewById(R.id.tvWalkedDistanceLabel);
-		        tvWalkedDistanceLabel.setText("Afgelegde afstand");
+		        TextView txt_day = new TextView(this.getActivity());
+		        txt_day.setText("Maand");
+		        txt_day.setTextSize(20);
+		        txt_day.setPadding(0, 50, 50, 0);
+		        txt_day.setGravity(Gravity.LEFT);
 
-		        TextView tvSeenSurfaceLabel = (TextView) v.findViewById(R.id.tvSeenSurfaceLabel);
-		        tvSeenSurfaceLabel.setText("% Gezien");
+        		TableRow firstRow = new TableRow(this.getActivity());
+        		firstRow.addView(txt_empty);
+        		firstRow.addView(txt_month);
+        		firstRow.addView(txt_day);
 
-		        TextView tvWalkingSpeedLabel = (TextView) v.findViewById(R.id.tvWalkingSpeedLabel);
-		        tvWalkingSpeedLabel.setText("Snelheidsrecord");
-		        
+		        table.addView(firstRow,new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1));
+        	
+		        for (int i = 0; i < 4; i++) {
+	        		TableRow row = new TableRow(this.getActivity());
 
-		        TextView tvCoffeeMachineDay = (TextView) v.findViewById(R.id.tvCoffeeMachineDay);
-		        tvCoffeeMachineDay.setText(result.dayStatistics[0] + "");
-		        
-		        TextView tvWalkedDistanceDay = (TextView) v.findViewById(R.id.tvWalkedDistanceDay);
-		        tvWalkedDistanceDay.setText(result.dayStatistics[1] + " m");
+			        TextView txt_index = new TextView(this.getActivity());       
+			        txt_index.setText(prettyNames[i]);
+			        txt_index.setTextSize(20);
+			        txt_index.setGravity(Gravity.LEFT);
+			        txt_index.setPadding(50, 50, 0, 0);
 
-		        TextView tvSeenSurfaceDay = (TextView) v.findViewById(R.id.tvSeenSurfaceDay);
-		        tvSeenSurfaceDay.setText(result.dayStatistics[2] + " %");
+			        TextView txt_user = new TextView(this.getActivity());       
+			        txt_user.setText(result.dayStatistics[i] + units[i]);
+			        txt_user.setTextSize(20);
+			        txt_user.setPadding(30, 0, 0, 50);
+			        txt_user.setGravity(Gravity.LEFT);
+			        
+			        int toShow = result.monthStatistics[i];
+			        if(i == 2)
+			        {
+			        	if( toShow > 100 )
+			        	{
+			        		toShow = 100;
+			        	}
+			        }
+			        TextView txt_score = new TextView(this.getActivity());
+			        txt_score.setText(toShow + units[i]);
+			        txt_score.setTextSize(20);
+			        txt_score.setPadding(0, 50, 50, 0);
+			        txt_score.setGravity(Gravity.LEFT);
 
-		        TextView tvWalkingSpeedDay = (TextView) v.findViewById(R.id.tvWalkingSpeedDay);
-		        tvWalkingSpeedDay.setText(result.dayStatistics[3] + " km/u");
-		        
+			        row.addView(txt_index);
+			        row.addView(txt_user);
+			        row.addView(txt_score);
 
-		        TextView tvCoffeeMachineMonth = (TextView) v.findViewById(R.id.tvCoffeeMachineMonth);
-		        tvCoffeeMachineMonth.setText(result.monthStatistics[0] + "");
-
-		        TextView tvWalkedDistanceMonth = (TextView) v.findViewById(R.id.tvWalkedDistanceMonth);
-		        tvWalkedDistanceMonth.setText(result.monthStatistics[1] + " m");
-
-		        TextView tvSeenSurfaceMonth = (TextView) v.findViewById(R.id.tvSeenSurfaceMonth);
-		        tvSeenSurfaceMonth.setText(result.monthStatistics[2] + " %");
-
-		        TextView tvWalkingSpeedMonth = (TextView) v.findViewById(R.id.tvWalkingSpeedMonth);
-		        tvWalkingSpeedMonth.setText(result.monthStatistics[3] + " km/u");
-
+			        table.addView(row,new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1));
+	        	
+		        }
 			}
+
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
