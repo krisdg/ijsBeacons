@@ -229,7 +229,7 @@ public class BackgroundService extends Service {
 					//Reset statistics at 24PM
 					SimpleDateFormat dateFormat = new SimpleDateFormat("H");
 					Date date = new Date();
-					if(dateFormat.format(date).equals("0")) {
+					if(dateFormat.format(date).equals("1")) {
 						//Reset statistics
 						if (statisticsReset == false) {
 							statisticsReset = true;

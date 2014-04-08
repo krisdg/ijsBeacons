@@ -80,22 +80,22 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             switch(pos)
             {
 	            case 0:
-	            	toReturn = UserStatistics.newInstance("UserStatistics, Instance 1");
+	            	toReturn = UserStatistics.newInstance("Gebruikersstatistieken");
 	            	break;
 	            case 1:
-	            	toReturn = Toplist.newInstance("Toplist, Instance 1", "CoffeeMachine");
+	            	toReturn = Toplist.newInstance("Koffiebezoeken", "CoffeeMachine", "");
 	            	break;
 	            case 2:
-	            	toReturn = Toplist.newInstance("Toplist, Instance 2", "WalkedDistance");
+	            	toReturn = Toplist.newInstance("Gelopen afstand", "WalkedDistance", "m");
 	            	break;
 	            case 3:
-	            	toReturn = Toplist.newInstance("Toplist, Instance 2", "SeenSurface");
+	            	toReturn = Toplist.newInstance("Opp. bezocht", "SeenSurface", "%");
 	            	break;
 	            case 4:
-	            	toReturn = Toplist.newInstance("Toplist, Instance 3", "WalkingSpeed");
+	            	toReturn = Toplist.newInstance("Loopsnelheid", "WalkingSpeed", "km/u");
 	            	break;
 	            default:
-	            	toReturn = Toplist.newInstance("Toplist, Default", "");
+	            	toReturn = Toplist.newInstance("Toplist, Default", "", "");
 	            	break;
             }
             
