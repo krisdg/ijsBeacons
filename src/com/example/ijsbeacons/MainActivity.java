@@ -47,11 +47,23 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		);
 
  		// For each of the sections in the app, add a tab to the action bar.
- 		actionBar.addTab(actionBar.newTab().setText("User").setTabListener(this));
- 		actionBar.addTab(actionBar.newTab().setText("Koffie").setTabListener(this));
- 		actionBar.addTab(actionBar.newTab().setText("Afstand").setTabListener(this));
- 		actionBar.addTab(actionBar.newTab().setText("% gezien").setTabListener(this));
- 		actionBar.addTab(actionBar.newTab().setText("Snelheid").setTabListener(this));
+// 		actionBar.addTab(actionBar.newTab().setText("User").setTabListener(this));
+// 		actionBar.addTab(actionBar.newTab().setText("Koffie").setTabListener(this));
+// 		actionBar.addTab(actionBar.newTab().setText("Afstand").setTabListener(this));
+// 		actionBar.addTab(actionBar.newTab().setText("% gezien").setTabListener(this));
+// 		actionBar.addTab(actionBar.newTab().setText("Snelheid").setTabListener(this));
+ 		
+// 		actionBar.addTab(actionBar.newTab().setIcon(R.drawable.user_basic_blue).setTabListener(this));
+// 		actionBar.addTab(actionBar.newTab().setIcon(R.drawable.coffee_basic_blue).setTabListener(this));
+// 		actionBar.addTab(actionBar.newTab().setIcon(R.drawable.image_basic_blue).setTabListener(this));
+// 		actionBar.addTab(actionBar.newTab().setIcon(R.drawable.disc_basic_blue).setTabListener(this));
+// 		actionBar.addTab(actionBar.newTab().setIcon(R.drawable.dashboard_basic_blue).setTabListener(this));
+ 		
+ 		actionBar.addTab(actionBar.newTab().setIcon(R.drawable.user_blue).setTabListener(this));
+ 		actionBar.addTab(actionBar.newTab().setIcon(R.drawable.coffee_blue).setTabListener(this));
+ 		actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ruler_blue).setTabListener(this));
+ 		actionBar.addTab(actionBar.newTab().setIcon(R.drawable.piechart_blue).setTabListener(this));
+ 		actionBar.addTab(actionBar.newTab().setIcon(R.drawable.dashboard_blue).setTabListener(this));
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
