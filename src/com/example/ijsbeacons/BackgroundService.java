@@ -364,8 +364,7 @@ public class BackgroundService extends Service {
 			@Override
 			public void onServiceReady() {
 				try {
-					beaconManager.startRanging(new Region("rid", null, null,
-							null));
+					beaconManager.startRanging(new Region("rid", null, null, null));
 				} catch (RemoteException e) {
 
 				}
