@@ -26,9 +26,6 @@ public class UserStatistics extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_userstatistics, container, false);
 
-//        TextView tv = (TextView) v.findViewById(R.id.tvFragFirst);
-//        tv.setText(getArguments().getString("msg"));
-
 		try {
 			SoapRequest_getPersonalStatistics getPersonalStatisticsObject = new SoapRequest_getPersonalStatistics();
 			getPersonalStatisticsObject.userAndroidId = ((IJsBeaconsApplication) getActivity().getApplication()).getUserAndroidId();
@@ -87,23 +84,35 @@ public class UserStatistics extends Fragment {
 			        txt_index.setPadding(50, 50, 0, 0);
 
 			        String toShow = String.valueOf(result.dayStatistics[i]);
+			        String unit = units[i];
+			        if(i == 1 && result.dayStatistics[i] > 1000)
+			        {
+			        	toShow = new DecimalFormat("#.#").format((float)result.dayStatistics[i] / 1000);
+			        	unit = " km";
+			        }
 			        if(i == 3)
 			        {
 			        	toShow = new DecimalFormat("#.#").format((float)result.dayStatistics[i] / 1000);
 			        }
 			        TextView txt_dayscore = new TextView(this.getActivity());       
-			        txt_dayscore.setText(toShow + units[i]);
+			        txt_dayscore.setText(toShow + unit);
 			        txt_dayscore.setTextSize(18);
 			        txt_dayscore.setPadding(30, 0, 0, 50);
 			        txt_dayscore.setGravity(Gravity.LEFT);
 			        
 			        toShow = String.valueOf(result.monthStatistics[i]);
+			        unit = units[i];
+			        if(i == 1 && result.monthStatistics[i] > 1000)
+			        {
+			        	toShow = new DecimalFormat("#.#").format((float)result.monthStatistics[i] / 1000);
+			        	unit = " km";
+			        }
 			        if(i == 3)
 			        {
 			        	toShow = new DecimalFormat("#.#").format((float)result.monthStatistics[i] / 1000);
 			        }
 			        TextView txt_monthscore = new TextView(this.getActivity());
-			        txt_monthscore.setText(toShow + units[i]);
+			        txt_monthscore.setText(toShow + unit);
 			        txt_monthscore.setTextSize(18);
 			        txt_monthscore.setPadding(0, 50, 50, 0);
 			        txt_monthscore.setGravity(Gravity.LEFT);
