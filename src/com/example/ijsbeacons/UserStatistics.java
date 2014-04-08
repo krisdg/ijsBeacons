@@ -34,8 +34,6 @@ public class UserStatistics extends Fragment {
 			getPersonalStatisticsObject.userAndroidId = ((IJsBeaconsApplication) getActivity().getApplication()).getUserAndroidId();
 
 			SoapResult_getPersonalStatistics result = (SoapResult_getPersonalStatistics) new SendSoapRequest().execute(getPersonalStatisticsObject).get();
-			
-			Toast.makeText(getActivity(), result.resultMessage, Toast.LENGTH_SHORT).show();
 
 	        TableLayout table = (TableLayout) v.findViewById(R.id.UserStatisticsTable);
 	        TableRow.LayoutParams params_title = new TableRow.LayoutParams();

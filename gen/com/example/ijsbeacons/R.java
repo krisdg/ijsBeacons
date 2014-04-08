@@ -25,12 +25,13 @@ public final class R {
         public static final int bronze=0x7f020000;
         public static final int coffee_blue=0x7f020001;
         public static final int dashboard_blue=0x7f020002;
-        public static final int gold=0x7f020003;
-        public static final int ic_launcher=0x7f020004;
-        public static final int piechart_blue=0x7f020005;
-        public static final int ruler_blue=0x7f020006;
-        public static final int silver=0x7f020007;
-        public static final int user_blue=0x7f020008;
+        public static final int error=0x7f020003;
+        public static final int gold=0x7f020004;
+        public static final int ic_launcher=0x7f020005;
+        public static final int piechart_blue=0x7f020006;
+        public static final int ruler_blue=0x7f020007;
+        public static final int silver=0x7f020008;
+        public static final int user_blue=0x7f020009;
     }
     public static final class id {
         public static final int ScrollView01=0x7f080007;

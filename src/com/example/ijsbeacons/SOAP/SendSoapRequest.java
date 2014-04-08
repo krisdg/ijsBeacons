@@ -132,7 +132,8 @@ public class SendSoapRequest extends AsyncTask<SoapRequest, String, SoapResult> 
 						if (resultObject.resultCode == 1)
 						{
 							// Daily
-							for (String value : soapresult.get(2).toString().split(";"))
+							resultObject.dayStatisticsAvailable = Boolean.parseBoolean(soapresult.get(2).toString());
+							for (String value : soapresult.get(3).toString().split(";"))
 							{
 								if( user )
 								{
@@ -149,7 +150,8 @@ public class SendSoapRequest extends AsyncTask<SoapRequest, String, SoapResult> 
 							// Monthly
 							user = true;
 							counter = 0;
-							for (String value : soapresult.get(3).toString().split(";"))
+							resultObject.monthStatisticsAvailable = Boolean.parseBoolean(soapresult.get(4).toString());
+							for (String value : soapresult.get(5).toString().split(";"))
 							{
 								if( user )
 								{

@@ -9,9 +9,11 @@ public class SoapResult_getToplist extends SoapResult
 	
 	public String[] userDay = new String[size];
 	public int[] dayStatistics = new int[size];
+	public boolean dayStatisticsAvailable = false;
 	
 	public String[] userMonth = new String[size];
 	public int[] monthStatistics = new int[size];
+	public boolean monthStatisticsAvailable = false;
 
 	
 	public SoapResult_getToplist() {

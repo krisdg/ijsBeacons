@@ -28,7 +28,7 @@ import org.ksoap2.transport.HttpTransportSE;
 
 import com.example.ijsbeacons.SOAP.*;
 
-public class Toplist extends Fragment implements OnClickListener
+public class Toplist extends Fragment
 {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,6 +46,8 @@ public class Toplist extends Fragment implements OnClickListener
 	        TableLayout table = (TableLayout) v.findViewById(R.id.TopListTable);
 	        TableRow.LayoutParams params_title = new TableRow.LayoutParams();
 	        params_title.span = 3;
+	        TableRow.LayoutParams params_error = new TableRow.LayoutParams();
+	        params_error.span = 2;
 
 	        TableRow row_day = new TableRow(this.getActivity());
 
@@ -61,62 +63,81 @@ public class Toplist extends Fragment implements OnClickListener
 			if (result.resultCode == 1)
 			{
 				int counter = 0;
+				
+				if (result.dayStatisticsAvailable == false) {
+			        TableRow row_day_na = new TableRow(this.getActivity());
+			        
+        			ImageView img_na = new ImageView(this.getActivity());
+        			img_na.setImageDrawable(v.getResources().getDrawable(R.drawable.error));
+        			img_na.setPadding(50, 50, 0, 0);
+        			
+        			row_day_na.addView(img_na);
 
-		        for (String user : result.userDay) {
-		        	if (user != null) {
-		        		TableRow row = new TableRow(this.getActivity());
+			        TextView title_day_na = new TextView(this.getActivity());       
+			        title_day_na.setText("Gegevens nog niet beschikbaar");
+			        title_day_na.setTextSize(20);
+			        title_day_na.setPadding(30, 35, 0, 0);
 
-		        		if (counter < 3) {
-		        			ImageView img_index = new ImageView(this.getActivity());
-		        			if (counter == 0) {
-			        			img_index.setImageDrawable(v.getResources().getDrawable(R.drawable.gold));
-		        			}
-		        			if (counter == 1) {
-			        			img_index.setImageDrawable(v.getResources().getDrawable(R.drawable.silver));
-		        			}
-		        			if (counter == 2) {
-			        			img_index.setImageDrawable(v.getResources().getDrawable(R.drawable.bronze));
-		        			}
-		        			img_index.setPadding(35, 20, 0, 0);
-					        row.addView(img_index);
-		        		} else {
-		        			TextView txt_index = new TextView(this.getActivity());       
-		        			txt_index.setText(String.valueOf(counter + 1));
-		        			txt_index.setTextSize(20);
-		        			txt_index.setGravity(Gravity.LEFT);
-		        			txt_index.setPadding(50, 20, 0, 0);
-					        row.addView(txt_index);
-		        		}
-				        
-				        TextView txt_user = new TextView(this.getActivity());       
-				        txt_user.setText(user);
-				        txt_user.setTextSize(20);
-				        txt_user.setPadding(30, 20, 0, 0);
-				        txt_user.setGravity(Gravity.LEFT);
+			        row_day_na.addView(title_day_na, params_error);
 
-				        String unit = getArguments().getString("units");
-				        if (unit.equals("") == false) {
-				        	unit = " " + unit;
-				        }
-				        
-				        TextView txt_score = new TextView(this.getActivity());
-				        if (unit.equals("km/u")) {
-					        txt_score.setText(new DecimalFormat("#.#").format((float)result.dayStatistics[counter] / 1000) + unit);
-				        } else {
-					        txt_score.setText(result.dayStatistics[counter] + unit);
-				        }
-				        txt_score.setTextSize(20);
-				        txt_score.setPadding(0, 20, 50, 0);
-				        txt_score.setGravity(Gravity.RIGHT);
-
-				        row.addView(txt_user);
-				        row.addView(txt_score);
-
-				        table.addView(row,new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1));
-		        	
-				        counter++;
-		        	}
-		        }
+			        table.addView(row_day_na,new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+				} else {
+			        for (String user : result.userDay) {
+			        	if (user != null) {
+			        		TableRow row = new TableRow(this.getActivity());
+	
+			        		if (counter < 3) {
+			        			ImageView img_index = new ImageView(this.getActivity());
+			        			if (counter == 0) {
+				        			img_index.setImageDrawable(v.getResources().getDrawable(R.drawable.gold));
+			        			}
+			        			if (counter == 1) {
+				        			img_index.setImageDrawable(v.getResources().getDrawable(R.drawable.silver));
+			        			}
+			        			if (counter == 2) {
+				        			img_index.setImageDrawable(v.getResources().getDrawable(R.drawable.bronze));
+			        			}
+			        			img_index.setPadding(35, 20, 0, 0);
+						        row.addView(img_index);
+			        		} else {
+			        			TextView txt_index = new TextView(this.getActivity());       
+			        			txt_index.setText(String.valueOf(counter + 1));
+			        			txt_index.setTextSize(20);
+			        			txt_index.setGravity(Gravity.LEFT);
+			        			txt_index.setPadding(50, 20, 0, 0);
+						        row.addView(txt_index);
+			        		}
+					        
+					        TextView txt_user = new TextView(this.getActivity());       
+					        txt_user.setText(user);
+					        txt_user.setTextSize(20);
+					        txt_user.setPadding(30, 20, 0, 0);
+					        txt_user.setGravity(Gravity.LEFT);
+	
+					        String unit = getArguments().getString("units");
+					        if (unit.equals("") == false) {
+					        	unit = " " + unit;
+					        }
+					        
+					        TextView txt_score = new TextView(this.getActivity());
+					        if (unit.equals(" km/u")) {
+						        txt_score.setText(new DecimalFormat("#.#").format((float)result.dayStatistics[counter] / 1000) + unit);
+					        } else {
+						        txt_score.setText(result.dayStatistics[counter] + unit);
+					        }
+					        txt_score.setTextSize(20);
+					        txt_score.setPadding(0, 20, 50, 0);
+					        txt_score.setGravity(Gravity.RIGHT);
+	
+					        row.addView(txt_user);
+					        row.addView(txt_score);
+	
+					        table.addView(row,new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1));
+			        	
+					        counter++;
+			        	}
+			        }
+				}
 			}
 			
 			//Set title MONTH
@@ -135,61 +156,80 @@ public class Toplist extends Fragment implements OnClickListener
 			{
 				int counter = 0;
 
-		        for (String user : result.userMonth) {
-		        	if (user != null) {
-		        		TableRow row = new TableRow(this.getActivity());
-		        		
-		        		if (counter < 3) {
-		        			ImageView img_index = new ImageView(this.getActivity());
-		        			if (counter == 0) {
-			        			img_index.setImageDrawable(v.getResources().getDrawable(R.drawable.gold));
-		        			}
-		        			if (counter == 1) {
-			        			img_index.setImageDrawable(v.getResources().getDrawable(R.drawable.silver));
-		        			}
-		        			if (counter == 2) {
-			        			img_index.setImageDrawable(v.getResources().getDrawable(R.drawable.bronze));
-		        			}
-		        			img_index.setPadding(35, 20, 0, 0);
-					        row.addView(img_index);
-		        		} else {
-		        			TextView txt_index = new TextView(this.getActivity());       
-		        			txt_index.setText(String.valueOf(counter + 1));
-		        			txt_index.setTextSize(20);
-		        			txt_index.setGravity(Gravity.LEFT);
-		        			txt_index.setPadding(50, 20, 0, 0);
-					        row.addView(txt_index);
-		        		}
-				        
-				        TextView txt_user = new TextView(this.getActivity());       
-				        txt_user.setText(user);
-				        txt_user.setTextSize(20);
-				        txt_user.setPadding(30, 20, 0, 0);
-				        txt_user.setGravity(Gravity.LEFT);
+				if (result.monthStatisticsAvailable == false) {
+			        TableRow row_month_na = new TableRow(this.getActivity());
 
-				        String unit = getArguments().getString("units");
-				        if (unit.equals("") == false) {
-				        	unit = " " + unit;
-				        }
-				        
-				        TextView txt_score = new TextView(this.getActivity());
-				        if (unit.equals(" km/u")) {
-					        txt_score.setText(new DecimalFormat("#.#").format((float)result.monthStatistics[counter] / 1000) + unit);
-				        } else {
-					        txt_score.setText(result.monthStatistics[counter] + unit);
-				        }
-				        txt_score.setTextSize(20);
-				        txt_score.setPadding(0, 20, 50, 0);
-				        txt_score.setGravity(Gravity.RIGHT);
-		        		
-				        row.addView(txt_user);
-				        row.addView(txt_score);
+        			ImageView img_na = new ImageView(this.getActivity());
+        			img_na.setImageDrawable(v.getResources().getDrawable(R.drawable.error));
+        			img_na.setPadding(50, 50, 0, 0);
+        			
+        			row_month_na.addView(img_na);
 
-				        table.addView(row,new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-		        	
-				        counter++;
-		        	}
-		        }
+			        TextView title_month_na = new TextView(this.getActivity());       
+			        title_month_na.setText("Gegevens nog niet beschikbaar");
+			        title_month_na.setTextSize(20);
+			        title_month_na.setPadding(30, 35, 0, 0);
+
+			        row_month_na.addView(title_month_na, params_error);
+
+			        table.addView(row_month_na,new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+				} else {
+			        for (String user : result.userMonth) {
+			        	if (user != null) {
+			        		TableRow row = new TableRow(this.getActivity());
+			        		
+			        		if (counter < 3) {
+			        			ImageView img_index = new ImageView(this.getActivity());
+			        			if (counter == 0) {
+				        			img_index.setImageDrawable(v.getResources().getDrawable(R.drawable.gold));
+			        			}
+			        			if (counter == 1) {
+				        			img_index.setImageDrawable(v.getResources().getDrawable(R.drawable.silver));
+			        			}
+			        			if (counter == 2) {
+				        			img_index.setImageDrawable(v.getResources().getDrawable(R.drawable.bronze));
+			        			}
+			        			img_index.setPadding(35, 20, 0, 0);
+						        row.addView(img_index);
+			        		} else {
+			        			TextView txt_index = new TextView(this.getActivity());       
+			        			txt_index.setText(String.valueOf(counter + 1));
+			        			txt_index.setTextSize(20);
+			        			txt_index.setGravity(Gravity.LEFT);
+			        			txt_index.setPadding(50, 20, 0, 0);
+						        row.addView(txt_index);
+			        		}
+					        
+					        TextView txt_user = new TextView(this.getActivity());       
+					        txt_user.setText(user);
+					        txt_user.setTextSize(20);
+					        txt_user.setPadding(30, 20, 0, 0);
+					        txt_user.setGravity(Gravity.LEFT);
+	
+					        String unit = getArguments().getString("units");
+					        if (unit.equals("") == false) {
+					        	unit = " " + unit;
+					        }
+					        
+					        TextView txt_score = new TextView(this.getActivity());
+					        if (unit.equals(" km/u")) {
+						        txt_score.setText(new DecimalFormat("#.#").format((float)result.monthStatistics[counter] / 1000) + unit);
+					        } else {
+						        txt_score.setText(result.monthStatistics[counter] + unit);
+					        }
+					        txt_score.setTextSize(20);
+					        txt_score.setPadding(0, 20, 50, 0);
+					        txt_score.setGravity(Gravity.RIGHT);
+			        		
+					        row.addView(txt_user);
+					        row.addView(txt_score);
+	
+					        table.addView(row,new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+			        	
+					        counter++;
+			        	}
+			        }
+				}
 			}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -214,22 +254,6 @@ public class Toplist extends Fragment implements OnClickListener
 		f.setArguments(b);
 
 		return f;
-	}
-
-	@Override
-	public void onClick(View arg0)
-	{
-		try {
-			SoapResult_getUser result = (SoapResult_getUser) new SendSoapRequest().execute(new SoapRequest_getUserByAndroidId("abc")).get();
-		
-			Toast.makeText(this.getActivity(), "Result: " + result.resultCode + " - " + result.userId, Toast.LENGTH_LONG).show();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 }
 
