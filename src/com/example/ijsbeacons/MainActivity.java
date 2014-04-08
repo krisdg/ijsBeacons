@@ -47,10 +47,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		);
 
  		// For each of the sections in the app, add a tab to the action bar.
- 		actionBar.addTab(actionBar.newTab().setText("A").setTabListener(this));
- 		actionBar.addTab(actionBar.newTab().setText("B").setTabListener(this));
- 		actionBar.addTab(actionBar.newTab().setText("C").setTabListener(this));
- 		actionBar.addTab(actionBar.newTab().setText("D").setTabListener(this));
+ 		actionBar.addTab(actionBar.newTab().setText("User").setTabListener(this));
+ 		actionBar.addTab(actionBar.newTab().setText("Koffie").setTabListener(this));
+ 		actionBar.addTab(actionBar.newTab().setText("Afstand").setTabListener(this));
+ 		actionBar.addTab(actionBar.newTab().setText("% gezien").setTabListener(this));
+ 		actionBar.addTab(actionBar.newTab().setText("Snelheid").setTabListener(this));
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
@@ -60,20 +61,38 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         }
 
         @Override
-        public Fragment getItem(int pos) {
+        public Fragment getItem(int pos)
+        {
+        	Fragment toReturn;
+        	
             switch(pos)
             {
-	            case 0: return UserStatistics.newInstance("UserStatistics, Instance 1");
-	            case 1: return Toplist.newInstance("Toplist, Instance 1");
-	            case 2: return Toplist.newInstance("Toplist, Instance 2");
-	            case 3: return Toplist.newInstance("Toplist, Instance 3");
-	            default: return Toplist.newInstance("Toplist, Default");
+	            case 0:
+	            	toReturn = UserStatistics.newInstance("UserStatistics, Instance 1");
+	            	break;
+	            case 1:
+	            	toReturn = Toplist.newInstance("Toplist, Instance 1", "CoffeeMachine");
+	            	break;
+	            case 2:
+	            	toReturn = Toplist.newInstance("Toplist, Instance 2", "WalkedDistance");
+	            	break;
+	            case 3:
+	            	toReturn = Toplist.newInstance("Toplist, Instance 2", "SeenSurface");
+	            	break;
+	            case 4:
+	            	toReturn = Toplist.newInstance("Toplist, Instance 3", "WalkingSpeed");
+	            	break;
+	            default:
+	            	toReturn = Toplist.newInstance("Toplist, Default", "");
+	            	break;
             }
+            
+        	return toReturn;
         }
 
         @Override
         public int getCount() {
-            return 4;
+            return 5;
         }       
     }
 

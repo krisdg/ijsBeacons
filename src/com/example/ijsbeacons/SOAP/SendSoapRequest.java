@@ -47,6 +47,11 @@ public class SendSoapRequest extends AsyncTask<SoapRequest, String, SoapResult> 
 			request.addProperty("seenSurface", ((SoapRequest_updateStatistics) soaprequest[0]).seenSurface);
 			request.addProperty("walkingSpeed", ((SoapRequest_updateStatistics) soaprequest[0]).walkingSpeed);
 		}
+		if (soaprequest[0] instanceof SoapRequest_getToplist) {
+			//Paramaters
+			request.addProperty("startDate", ((SoapRequest_getToplist) soaprequest[0]).startDate);
+			request.addProperty("endDate", ((SoapRequest_getToplist) soaprequest[0]).endDate);
+		}
 		
 		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
 				SoapEnvelope.VER11);
@@ -85,8 +90,8 @@ public class SendSoapRequest extends AsyncTask<SoapRequest, String, SoapResult> 
 				if (soaprequest[0] instanceof SoapRequest_getPersonalStatistics) {
 					int counter = 0;
 					
-					int[] dayStatistics = new int[4]; //CoffeeMachineDay, WalkedDistanceDay, SeenSurfaceDay, WalkingSpeedDay
-					int[] monthStatistics = new int[4]; //CoffeeMachineMonth, WalkedDistanceMonth, SeenSurfaceMonth, WalkingSpeedMonth
+//					int[] dayStatistics = new int[4]; //CoffeeMachineDay, WalkedDistanceDay, SeenSurfaceDay, WalkingSpeedDay
+//					int[] monthStatistics = new int[4]; //CoffeeMachineMonth, WalkedDistanceMonth, SeenSurfaceMonth, WalkingSpeedMonth
 
 					SoapResult_getPersonalStatistics resultObject = new SoapResult_getPersonalStatistics();
 					
@@ -99,15 +104,72 @@ public class SendSoapRequest extends AsyncTask<SoapRequest, String, SoapResult> 
 						if (resultObject.resultCode == 1)
 						{
 							for (String value : soapresult.get(2).toString().split(";")) {
-								dayStatistics[counter] = Integer.parseInt(value);
+								resultObject.dayStatistics[counter] = Integer.parseInt(value);
 								counter++;
 							}
 							counter = 0;
 							for (String value : soapresult.get(3).toString().split(";")) {
-								monthStatistics[counter] = Integer.parseInt(value);
+								resultObject.monthStatistics[counter] = Integer.parseInt(value);
 								counter++;
 							}
 						}
+					}
+
+					return resultObject;
+				}
+
+				if (soaprequest[0] instanceof SoapRequest_getToplist) {
+					int counter = 0;
+					
+					// true is user, false is statistic number
+					boolean user = true;
+					
+//					int[] dayStatistics = new int[4]; //CoffeeMachineDay, WalkedDistanceDay, SeenSurfaceDay, WalkingSpeedDay
+//					int[] monthStatistics = new int[4]; //CoffeeMachineMonth, WalkedDistanceMonth, SeenSurfaceMonth, WalkingSpeedMonth
+
+					SoapResult_getToplist resultObject = new SoapResult_getToplist();
+					
+					if (result.getProperty(0) instanceof Vector) {
+						Vector soapresult = (Vector)result.getProperty(0);
+						
+						resultObject.resultCode = Integer.parseInt(soapresult.get(0).toString());
+						resultObject.resultMessage = soapresult.get(1).toString();
+						
+						if (resultObject.resultCode == 1)
+						{
+							// Daily
+							for (String value : soapresult.get(2).toString().split(";"))
+							{
+								if( user )
+								{
+									resultObject.userDay[counter] = value;
+									
+								} else {
+
+									resultObject.dayStatistics[counter] = Integer.parseInt(value);
+									counter++;
+								}
+								user = !user;
+							}
+							
+							// Monthly
+							user = true;
+							counter = 0;
+							for (String value : soapresult.get(3).toString().split(";"))
+							{
+								if( user )
+								{
+									resultObject.userMonth[counter] = value;
+									
+								} else {
+
+									resultObject.monthStatistics[counter] = Integer.parseInt(value);
+									counter++;
+								}
+								user = !user;
+							}
+							
+						} // end if result code 1
 					}
 
 					return resultObject;
