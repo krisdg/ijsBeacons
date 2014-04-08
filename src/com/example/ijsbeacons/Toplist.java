@@ -122,6 +122,8 @@ public class Toplist extends Fragment
 					        TextView txt_score = new TextView(this.getActivity());
 					        if (unit.equals(" km/u")) {
 						        txt_score.setText(new DecimalFormat("#.#").format((float)result.dayStatistics[counter] / 1000) + unit);
+					        } else if (unit.equals(" m") && result.dayStatistics[counter] > 1000) {
+						        txt_score.setText(new DecimalFormat("#.#").format((float)result.dayStatistics[counter] / 1000) + " km");
 					        } else {
 						        txt_score.setText(result.dayStatistics[counter] + unit);
 					        }
@@ -214,6 +216,8 @@ public class Toplist extends Fragment
 					        TextView txt_score = new TextView(this.getActivity());
 					        if (unit.equals(" km/u")) {
 						        txt_score.setText(new DecimalFormat("#.#").format((float)result.monthStatistics[counter] / 1000) + unit);
+					        } else if (unit.equals(" m") && result.monthStatistics[counter] > 1000) {
+						        txt_score.setText(new DecimalFormat("#.#").format((float)result.monthStatistics[counter] / 1000) + " km");
 					        } else {
 						        txt_score.setText(result.monthStatistics[counter] + unit);
 					        }

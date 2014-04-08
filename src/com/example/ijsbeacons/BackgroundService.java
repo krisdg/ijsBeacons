@@ -366,7 +366,7 @@ public class BackgroundService extends Service {
 		}
 
 		System.out.println("SERVICE STARTED");
-		Toast.makeText(this, "Service Started", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "ijsBeacons service gestart", Toast.LENGTH_SHORT).show();
 
 		beaconManager.connect(new BeaconManager.ServiceReadyCallback() {
 			@Override
@@ -389,7 +389,7 @@ public class BackgroundService extends Service {
 	public void onDestroy() {
 		isRunning = false;
 
-		Toast.makeText(this, "Service Killed", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "ijsBeacons service gestopt", Toast.LENGTH_SHORT).show();
 	}
 
 }
