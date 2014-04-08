@@ -3,6 +3,7 @@ package com.example.ijsbeacons;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,7 +23,17 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         getActionBar().setTitle("ijsBeacons");
         
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);    
+        setContentView(R.layout.activity_main);   
+        
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (mBluetoothAdapter == null) {
+            // Device does not support Bluetooth
+        } else {
+            if (!mBluetoothAdapter.isEnabled()) {
+            	Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent, 1);
+            }
+        }
         
         pa = new MyPagerAdapter(getSupportFragmentManager());
 

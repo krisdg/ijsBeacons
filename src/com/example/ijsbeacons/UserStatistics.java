@@ -60,13 +60,13 @@ public class UserStatistics extends Fragment {
 
 		        TextView txt_month = new TextView(this.getActivity());       
 		        txt_month.setText("Dag");
-		        txt_month.setTextSize(20);
+		        txt_month.setTextSize(18);
 		        txt_month.setPadding(30, 50, 0, 0);
 		        txt_month.setGravity(Gravity.LEFT);
 		        
 		        TextView txt_day = new TextView(this.getActivity());
 		        txt_day.setText("Maand");
-		        txt_day.setTextSize(20);
+		        txt_day.setTextSize(18);
 		        txt_day.setPadding(0, 50, 50, 0);
 		        txt_day.setGravity(Gravity.LEFT);
 
@@ -82,7 +82,7 @@ public class UserStatistics extends Fragment {
 
 			        TextView txt_index = new TextView(this.getActivity());       
 			        txt_index.setText(prettyNames[i]);
-			        txt_index.setTextSize(20);
+			        txt_index.setTextSize(18);
 			        txt_index.setGravity(Gravity.LEFT);
 			        txt_index.setPadding(50, 50, 0, 0);
 
@@ -93,7 +93,7 @@ public class UserStatistics extends Fragment {
 			        }
 			        TextView txt_dayscore = new TextView(this.getActivity());       
 			        txt_dayscore.setText(toShow + units[i]);
-			        txt_dayscore.setTextSize(20);
+			        txt_dayscore.setTextSize(18);
 			        txt_dayscore.setPadding(30, 0, 0, 50);
 			        txt_dayscore.setGravity(Gravity.LEFT);
 			        
@@ -104,7 +104,7 @@ public class UserStatistics extends Fragment {
 			        }
 			        TextView txt_monthscore = new TextView(this.getActivity());
 			        txt_monthscore.setText(toShow + units[i]);
-			        txt_monthscore.setTextSize(20);
+			        txt_monthscore.setTextSize(18);
 			        txt_monthscore.setPadding(0, 50, 50, 0);
 			        txt_monthscore.setGravity(Gravity.LEFT);
 
