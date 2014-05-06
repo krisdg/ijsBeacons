@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SoapResult_getPersonalStatistics extends SoapResult {
-	public int[] dayStatistics = new int[4];
-	public int[] monthStatistics = new int[4];
+	public int[] dayStatistics = new int[5];
+	public int[] monthStatistics = new int[5];
 
 	public SoapResult_getPersonalStatistics() {
 	}

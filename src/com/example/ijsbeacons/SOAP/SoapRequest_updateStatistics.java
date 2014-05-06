@@ -7,11 +7,12 @@ public class SoapRequest_updateStatistics extends SoapRequest {
 	public int walkedDistance;
 	public int seenSurface;
 	public int walkingSpeed;
+	public int lunchRoomCount;
 	
 	public SoapRequest_updateStatistics() {
 		super.METHOD_NAME = "updateStatistics";
 	}
-	public SoapRequest_updateStatistics(String userAndroidId, int coffeeMachineCount, int walkedDistance, int seenSurface, int walkingSpeed) {
+	public SoapRequest_updateStatistics(String userAndroidId, int coffeeMachineCount, int walkedDistance, int seenSurface, int walkingSpeed, int lunchRoomCount) {
 		this();
 		
 		this.userAndroidId = userAndroidId;
@@ -19,5 +20,6 @@ public class SoapRequest_updateStatistics extends SoapRequest {
 		this.walkedDistance = walkedDistance;
 		this.seenSurface = seenSurface;
 		this.walkingSpeed = walkingSpeed;
+		this.lunchRoomCount = lunchRoomCount;
 	}
 }

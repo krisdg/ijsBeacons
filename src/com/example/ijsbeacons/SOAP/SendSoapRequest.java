@@ -46,6 +46,7 @@ public class SendSoapRequest extends AsyncTask<SoapRequest, String, SoapResult> 
 			request.addProperty("walkedDistance", ((SoapRequest_updateStatistics) soaprequest[0]).walkedDistance);
 			request.addProperty("seenSurface", ((SoapRequest_updateStatistics) soaprequest[0]).seenSurface);
 			request.addProperty("walkingSpeed", ((SoapRequest_updateStatistics) soaprequest[0]).walkingSpeed);
+			request.addProperty("lunchRoomCount", ((SoapRequest_updateStatistics) soaprequest[0]).lunchRoomCount);
 		}
 		if (soaprequest[0] instanceof SoapRequest_getToplist) {
 			//Paramaters

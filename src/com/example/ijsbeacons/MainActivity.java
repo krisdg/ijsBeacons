@@ -60,6 +60,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
  		// For each of the sections in the app, add a tab to the action bar.
  		actionBar.addTab(actionBar.newTab().setIcon(R.drawable.user_blue).setTabListener(this));
  		actionBar.addTab(actionBar.newTab().setIcon(R.drawable.coffee_blue).setTabListener(this));
+ 		actionBar.addTab(actionBar.newTab().setIcon(R.drawable.bank_blue).setTabListener(this));
  		actionBar.addTab(actionBar.newTab().setIcon(R.drawable.ruler_blue).setTabListener(this));
  		actionBar.addTab(actionBar.newTab().setIcon(R.drawable.piechart_blue).setTabListener(this));
  		actionBar.addTab(actionBar.newTab().setIcon(R.drawable.dashboard_blue).setTabListener(this));
@@ -85,12 +86,15 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	            	toReturn = Toplist.newInstance("Koffiebezoeken", "CoffeeMachine", "");
 	            	break;
 	            case 2:
-	            	toReturn = Toplist.newInstance("Gelopen afstand", "WalkedDistance", "m");
+	            	toReturn = Toplist.newInstance("Lunchroombezoeken", "LunchRoom", "");
 	            	break;
 	            case 3:
-	            	toReturn = Toplist.newInstance("Opp. bezocht", "SeenSurface", "%");
+	            	toReturn = Toplist.newInstance("Gelopen afstand", "WalkedDistance", "m");
 	            	break;
 	            case 4:
+	            	toReturn = Toplist.newInstance("Opp. bezocht", "SeenSurface", "%");
+	            	break;
+	            case 5:
 	            	toReturn = Toplist.newInstance("Loopsnelheid", "WalkingSpeed", "km/u");
 	            	break;
 	            default:
@@ -103,7 +107,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         @Override
         public int getCount() {
-            return 5;
+            return 6;
         }       
     }
 

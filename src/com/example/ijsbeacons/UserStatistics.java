@@ -47,8 +47,8 @@ public class UserStatistics extends Fragment {
 
 	        table.addView(row_day,new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 	        
-	        String[] prettyNames = {"Koffie gehaald", "Gelopen afstand", "% gezien", "Snelheidsrecord"};
-	        String[] units = {"", " m", " %", " km/u"};
+	        String[] prettyNames = {"Koffie gehaald", "Lunchroombezoeken", "Gelopen afstand", "% gezien", "Snelheidsrecord"};
+	        String[] units = {"", "", " m", " %", " km/u"};
 
 			if (result.resultCode == 1)
 			{
@@ -74,7 +74,7 @@ public class UserStatistics extends Fragment {
 
 		        table.addView(firstRow,new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1));
         	
-		        for (int i = 0; i < 4; i++) {
+		        for (int i = 0; i < 5; i++) {
 	        		TableRow row = new TableRow(this.getActivity());
 
 			        TextView txt_index = new TextView(this.getActivity());       
@@ -90,7 +90,7 @@ public class UserStatistics extends Fragment {
 			        	toShow = new DecimalFormat("#.#").format((float)result.dayStatistics[i] / 1000);
 			        	unit = " km";
 			        }
-			        if(i == 3)
+			        if(i == 4)
 			        {
 			        	toShow = new DecimalFormat("#.#").format((float)result.dayStatistics[i] / 1000);
 			        }
@@ -107,7 +107,7 @@ public class UserStatistics extends Fragment {
 			        	toShow = new DecimalFormat("#.#").format((float)result.monthStatistics[i] / 1000);
 			        	unit = " km";
 			        }
-			        if(i == 3)
+			        if(i == 4)
 			        {
 			        	toShow = new DecimalFormat("#.#").format((float)result.monthStatistics[i] / 1000);
 			        }
