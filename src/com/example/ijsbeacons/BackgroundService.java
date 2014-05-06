@@ -38,6 +38,8 @@ public class BackgroundService extends Service {
 	boolean statisticsReset = false;
 	double walkedDistance = 0;
 	int coffeeMachineCount = 0;
+	int lunchRoomCount = 0;
+	int lunchRoomDistance;
 	List<BeaconIdentifier> seenSurfaceBeacons = new ArrayList<BeaconIdentifier>();
 	double walkingSpeed = 0;
 	//Temporary statistic variables
@@ -52,6 +54,9 @@ public class BackgroundService extends Service {
 		beacons.add(new BeaconIdentifier("EA:4B:01:B6:4C:F5", "COFFEEMACHINE", new int[] {1, 0, 0})); //GROEN
 		beacons.add(new BeaconIdentifier("D4:23:26:59:34:AD", "HALL", new int[] {5, 10, 10})); //PAARS
 		beacons.add(new BeaconIdentifier("D8:38:9B:3F:55:F8", "ATTIC", new int[] {10, 0, 0})); //BLAUW
+		beacons.add(new BeaconIdentifier("00:00:00:00:00:00", "LUNCHROOM", new int[] {10, 0, 0})); //--
+		
+		lunchRoomDistance = 1000;
 		
 		distanceRules.add(new DistanceRule(getBeaconByName("COFFEEMACHINE"), getBeaconByName("ATTIC"), 50));
 		distanceRules.add(new DistanceRule(getBeaconByName("HALL"), getBeaconByName("ATTIC"), 34));
@@ -146,6 +151,10 @@ public class BackgroundService extends Service {
 			distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
 		}
 		
+		if (bcn1.name.equals("LUNCHROOM") || bcn2.name.equals("LUNCHROOM")) {
+			distance = lunchRoomDistance;
+		}
+		
 		return distance;
 	}
 
@@ -219,6 +228,7 @@ public class BackgroundService extends Service {
 					request.userAndroidId = userAndroidId;
 					request.walkedDistance = (int) walkedDistance;
 					request.coffeeMachineCount = coffeeMachineCount;
+					request.lunchRoomCount = lunchRoomCount;
 					request.seenSurface = seenSurfaceBeacons.size() * 100 / beacons.size();
 					request.walkingSpeed = (int) (walkingSpeed * 1000);
 
@@ -248,6 +258,7 @@ public class BackgroundService extends Service {
 							walkedDistance = 0;
 							walkingSpeed = 0;
 							coffeeMachineCount = 0;
+							lunchRoomCount = 0;
 							seenSurfaceBeacons.clear();
 						}
 					} else {
@@ -262,6 +273,7 @@ public class BackgroundService extends Service {
 					editor.putString("lastSave", dateFormat.format(date));
 					editor.putInt("walkedDistance", (int) walkedDistance);
 					editor.putInt("coffeeMachineCount", coffeeMachineCount);
+					editor.putInt("lunchRoomCount", lunchRoomCount);
 					editor.putInt("walkingSpeed", (int) (walkingSpeed * 1000));
 					
 					String seenSurfaceString = "";
@@ -290,6 +302,9 @@ public class BackgroundService extends Service {
 		//Update statistics
 		if (newBeacon.name.equals("COFFEEMACHINE")) {
 			coffeeMachineCount++;
+		}
+		if (newBeacon.name.equals("LUNCHROOM")) {
+			lunchRoomCount++;
 		}
 		
 		//Calculate walking speed
@@ -345,6 +360,7 @@ public class BackgroundService extends Service {
 		if (dateFormat.format(date).equals(lastSave)) {
 		    walkedDistance = Double.parseDouble(settings.getInt("walkedDistance", 0) + "");
 		    coffeeMachineCount = settings.getInt("coffeeMachineCount", 0);
+		    lunchRoomCount = settings.getInt("lunchRoomCount", 0);
 		    String seenSurfaceString = settings.getString("seenSurfaceString", "");
 		    walkingSpeed = Double.parseDouble(settings.getInt("walkingSpeed", 0) + "") / 1000;
 		    

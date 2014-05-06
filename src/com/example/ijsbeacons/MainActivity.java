@@ -86,7 +86,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	            	toReturn = Toplist.newInstance("Koffiebezoeken", "CoffeeMachine", "");
 	            	break;
 	            case 2:
-	            	toReturn = Toplist.newInstance("Lunchroombezoeken", "LunchRoom", "");
+	            	toReturn = Toplist.newInstance("Lunchbezoeken", "LunchRoom", "");
 	            	break;
 	            case 3:
 	            	toReturn = Toplist.newInstance("Gelopen afstand", "WalkedDistance", "m");
