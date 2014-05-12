@@ -10,5 +10,6 @@
     <string name="title_section3">Section 3</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_test">TESTActivity</string>
+    <string name="mediatour">Mediatour</string>
 
 </resources>

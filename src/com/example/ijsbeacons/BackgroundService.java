@@ -307,6 +307,14 @@ public class BackgroundService extends Service {
 			lunchRoomCount++;
 		}
 		
+		SharedPreferences settings = getSharedPreferences("ijsBeacons_Mediatour", 0);
+		Boolean isRunning = settings.getBoolean("isRunning", false);
+		if ( newBeacon.name.equals("TREX") && isRunning )
+		{
+			Intent popup = new Intent(this, MediatourPopupActivity.class);
+			startActivity(popup);
+		}
+		
 		//Calculate walking speed
 		if (newBeacon.name.equals("ATTIC")) {
 			timestampAttic = System.currentTimeMillis();

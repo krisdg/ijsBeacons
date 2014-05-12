@@ -44,6 +44,33 @@
         	android:icon="@drawable/ic_launcher"
         	android:label="@string/title_activity_main" >
 	    </service>
+	    
+        <activity
+            android:name="com.example.ijsbeacons.MediatourActivity"
+            android:label="@string/mediatour"
+ 		    android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.example.ijsbeacons.MediatourContestActivity"
+            android:label="@string/mediatour"
+ 		    android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.example.ijsbeacons.MediatourPopupActivity"
+            android:label="@string/mediatour"
+ 		    android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.example.ijsbeacons.MediatourPopupWelcomeActivity"
+            android:label="@string/mediatour"
+ 		    android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.example.ijsbeacons.MediatourWaitActivity"
+            android:label="@string/mediatour"
+ 		    android:screenOrientation="portrait" >
+        </activity>
+        
 	    <service 
 	        android:name="com.estimote.sdk.service.BeaconService"
 	        android:exported="false"/>

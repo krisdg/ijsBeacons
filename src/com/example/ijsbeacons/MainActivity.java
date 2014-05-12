@@ -12,6 +12,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 	
@@ -65,6 +68,19 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
  		actionBar.addTab(actionBar.newTab().setIcon(R.drawable.piechart_blue).setTabListener(this));
  		actionBar.addTab(actionBar.newTab().setIcon(R.drawable.dashboard_blue).setTabListener(this));
     }
+    
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return true;
+    }
+    
+    public void startMediatour(MenuItem menuItem)
+    {
+    	Intent mediatour = new Intent(this, MediatourActivity.class);
+    	startActivity(mediatour);
+    }
+
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
 
