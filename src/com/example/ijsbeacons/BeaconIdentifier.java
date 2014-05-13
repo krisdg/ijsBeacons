@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BeaconIdentifier {
+	int index;
 	String MAC;
 	String name;
 	List<Double> distanceList = new ArrayList<Double>();
@@ -14,7 +15,8 @@ public class BeaconIdentifier {
 		
 	}
 	
-	public BeaconIdentifier(String MAC, String name, int location[]) {
+	public BeaconIdentifier(int index, String MAC, String name, int location[]) {
+		this.index = index;
 		this.MAC = MAC;
 		this.name = name;
 		this.location = location;

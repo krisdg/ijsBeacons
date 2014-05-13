@@ -51,12 +51,18 @@ public class BackgroundService extends Service {
     public List<DistanceRule> distanceRules = new ArrayList<DistanceRule>();
 	
 	public void defineBeaconList() {
-		beacons.add(new BeaconIdentifier("EA:4B:01:B6:4C:F5", "COFFEEMACHINE", new int[] {1, 0, 0})); //GROEN
-		beacons.add(new BeaconIdentifier("D4:23:26:59:34:AD", "HALL", new int[] {5, 10, 10})); //PAARS
-		beacons.add(new BeaconIdentifier("D8:38:9B:3F:55:F8", "ATTIC", new int[] {10, 0, 0})); //BLAUW
-		beacons.add(new BeaconIdentifier("00:00:00:00:00:00", "LUNCHROOM", new int[] {10, 0, 0})); //--
+		beacons.add(new BeaconIdentifier(1, "CB:B9:64:A9:99:63", "COFFEEMACHINE", new int[] {1, 0, 0}));
+		beacons.add(new BeaconIdentifier(2, "E4:0E:93:D0:BA:41", "HALL", new int[] {5, 10, 10}));
+		beacons.add(new BeaconIdentifier(3, "F5:98:ED:5D:AE:64", "ATTIC", new int[] {10, 0, 0}));
+		beacons.add(new BeaconIdentifier(4, "C8:BE:1A:62:FC:53", "LUNCHROOM", new int[] {10, 0, 0}));
+		beacons.add(new BeaconIdentifier(5, "F6:84:11:0A:42:89", "--", new int[] {10, 0, 0}));
+		beacons.add(new BeaconIdentifier(6, "D4:94:EE:7C:E6:A5", "--", new int[] {10, 0, 0}));
+		beacons.add(new BeaconIdentifier(7, "E7:2F:EB:00:74:95", "--", new int[] {10, 0, 0}));
+
+		beacons.add(new BeaconIdentifier(8, "F9:07:51:9A:CF:95", "TREX", new int[] {0, 0, 0}));
+		beacons.add(new BeaconIdentifier(9, "FA:7F:24:AD:57:CC", "MEDIATOURSTART", new int[] {0, 0, 0}));
 		
-		lunchRoomDistance = 1000;
+		lunchRoomDistance = 30;
 		
 		distanceRules.add(new DistanceRule(getBeaconByName("COFFEEMACHINE"), getBeaconByName("ATTIC"), 50));
 		distanceRules.add(new DistanceRule(getBeaconByName("HALL"), getBeaconByName("ATTIC"), 34));
@@ -172,7 +178,7 @@ public class BackgroundService extends Service {
 							toRemove.add(bcn);
 							System.out.println("[BEACON IDENTIFIERS]REMOVED BEACON " + bcn.MAC);
 						}
-						System.out.println("[BEACON IDENTIFIERS]BCN:" + bcn.name + " : " + String.format("%1$,.2f", bcn.getAvarageDistance()) + " : " + bcn.lastSeen);
+						System.out.println("[BEACON IDENTIFIERS]IDX: " + bcn.index + " BCN:" + bcn.name + " : " + String.format("%1$,.2f", bcn.getAvarageDistance()) + " : " + bcn.lastSeen);
 					}
 					foundBeacons.removeAll(toRemove);
 					
@@ -307,12 +313,8 @@ public class BackgroundService extends Service {
 			lunchRoomCount++;
 		}
 		
-		SharedPreferences settings = getSharedPreferences("ijsBeacons_Mediatour", 0);
-		Boolean isRunning = settings.getBoolean("isRunning", false);
-		if ( newBeacon.name.equals("TREX") && isRunning )
-		{
-			Intent popup = new Intent(this, MediatourPopupActivity.class);
-			startActivity(popup);
+		if (newBeacon.name.equals("TREX") || newBeacon.name.equals("MEDIATOURSTART")) {
+			((IJsBeaconsApplication) this.getApplication()).setMediaTourBeacon(newBeacon.name);
 		}
 		
 		//Calculate walking speed

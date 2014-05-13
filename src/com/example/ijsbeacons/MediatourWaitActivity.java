@@ -48,22 +48,42 @@ public class MediatourWaitActivity extends Activity
 		welcomeText.setText("Loop gerust rond. Mocht er iets interessants in de buurt zijn vertellen wij het je!");
 		welcomeName.setVisibility(View.GONE);
 		contestValue.setVisibility(View.GONE);
-//		welcomeButton.setVisibility(View.GONE);
-		
-		welcomeButton.setText("Klik voor popup");
-		welcomeButton.setOnClickListener(
-			new View.OnClickListener() {
-				
-				@Override
-				public void onClick(View v)
-				{
-					Intent popup = new Intent(self, MediatourPopupActivity.class);
-//					Intent popup = new Intent(self, MediatourPopupWelcomeActivity.class);
-					startActivity(popup);
-					overridePendingTransition(R.anim.slideup, R.anim.slidedown);
-				}
-			}
-		);
+		welcomeButton.setVisibility(View.GONE);
 	}
-
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		
+		final IJsBeaconsApplication app = (IJsBeaconsApplication) this.getApplication();
+		
+		new Thread(new Runnable() {
+		    public void run() {
+		    	while(true) {
+		    		String closestBeacon;
+		    		closestBeacon = app.getMediaTourBeacon();
+		    		
+		    		if (closestBeacon.equals("TREX")) {
+		    			Intent popup = new Intent(self, MediatourPopupActivity.class);
+		    			startActivity(popup);
+						overridePendingTransition(R.anim.slideup, R.anim.slidedown);
+		    			break;
+		    		}
+		    		if (closestBeacon.equals("MEDIATOURSTART")) {
+		    			Intent popup = new Intent(self, MediatourPopupWelcomeActivity.class);
+		    			startActivity(popup);
+						overridePendingTransition(R.anim.slideup, R.anim.slidedown);
+		    			break;
+		    		}
+		    		
+		    		try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		    	}
+		    }
+		}).start();
+	}
 }

@@ -8,6 +8,7 @@ import android.app.Application;
 public class IJsBeaconsApplication extends Application {
 
     private String userAndroidId;
+    private String MediaTourClosestBeacon = "";
 
     public String getUserAndroidId() {
         return userAndroidId;
@@ -16,4 +17,12 @@ public class IJsBeaconsApplication extends Application {
     public void setUserAndroidId(String userAndroidId) {
         this.userAndroidId = userAndroidId;
     }
+
+	public void setMediaTourBeacon(String bcnName) {
+		MediaTourClosestBeacon = bcnName;
+	}
+
+	public String getMediaTourBeacon() {
+		return MediaTourClosestBeacon;
+	}
 }
