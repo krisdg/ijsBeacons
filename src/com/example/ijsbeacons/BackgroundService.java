@@ -39,7 +39,6 @@ public class BackgroundService extends Service {
 	double walkedDistance = 0;
 	int coffeeMachineCount = 0;
 	int lunchRoomCount = 0;
-	int lunchRoomDistance;
 	List<BeaconIdentifier> seenSurfaceBeacons = new ArrayList<BeaconIdentifier>();
 	double walkingSpeed = 0;
 	//Temporary statistic variables
@@ -51,21 +50,19 @@ public class BackgroundService extends Service {
     public List<DistanceRule> distanceRules = new ArrayList<DistanceRule>();
 	
 	public void defineBeaconList() {
-		beacons.add(new BeaconIdentifier(1, "CB:B9:64:A9:99:63", "COFFEEMACHINE", new int[] {1, 0, 0}));
-		beacons.add(new BeaconIdentifier(2, "E4:0E:93:D0:BA:41", "HALL", new int[] {5, 10, 10}));
-		beacons.add(new BeaconIdentifier(3, "F5:98:ED:5D:AE:64", "ATTIC", new int[] {10, 0, 0}));
-		beacons.add(new BeaconIdentifier(4, "C8:BE:1A:62:FC:53", "LUNCHROOM", new int[] {10, 0, 0}));
-		beacons.add(new BeaconIdentifier(5, "F6:84:11:0A:42:89", "--", new int[] {10, 0, 0}));
-		beacons.add(new BeaconIdentifier(6, "D4:94:EE:7C:E6:A5", "--", new int[] {10, 0, 0}));
-		beacons.add(new BeaconIdentifier(7, "E7:2F:EB:00:74:95", "--", new int[] {10, 0, 0}));
-
-		beacons.add(new BeaconIdentifier(8, "F9:07:51:9A:CF:95", "TREX", new int[] {0, 0, 0}));
-		beacons.add(new BeaconIdentifier(9, "FA:7F:24:AD:57:CC", "MEDIATOURSTART", new int[] {0, 0, 0}));
+		beacons.add(new BeaconIdentifier(1, "CB:B9:64:A9:99:63", "COFFEEMACHINE", new int[] {9, 3, 0, 10}));
+		beacons.add(new BeaconIdentifier(2, "E4:0E:93:D0:BA:41", "HALL", new int[] {0, 0, 10, 0}));
+		beacons.add(new BeaconIdentifier(3, "F5:98:ED:5D:AE:64", "ATTIC", new int[] {3, 3, 20, 0}));
+		beacons.add(new BeaconIdentifier(4, "C8:BE:1A:62:FC:53", "LUNCHROOM", new int[] {0, 0, 0, 150}));
+		beacons.add(new BeaconIdentifier(5, "F6:84:11:0A:42:89", "FIRSTFLOOR", new int[] {3, 0, 15, 3}));
+		beacons.add(new BeaconIdentifier(6, "D4:94:EE:7C:E6:A5", "SECOND_MEETINGROOM", new int[] {3, 0, 10, 5}));
+		beacons.add(new BeaconIdentifier(7, "E7:2F:EB:00:74:95", "THIRD_MEETINGROOM", new int[] {6, 6, 20, 3}));
 		
-		lunchRoomDistance = 30;
-		
-		distanceRules.add(new DistanceRule(getBeaconByName("COFFEEMACHINE"), getBeaconByName("ATTIC"), 50));
+		distanceRules.add(new DistanceRule(getBeaconByName("HALL"), getBeaconByName("COFFEEMACHINE"), 19));
 		distanceRules.add(new DistanceRule(getBeaconByName("HALL"), getBeaconByName("ATTIC"), 34));
+		distanceRules.add(new DistanceRule(getBeaconByName("HALL"), getBeaconByName("FIRSTFLOOR"), 20));
+		distanceRules.add(new DistanceRule(getBeaconByName("COFFEEMACHINE"), getBeaconByName("ATTIC"), 42));
+		distanceRules.add(new DistanceRule(getBeaconByName("FIRSTFLOOR"), getBeaconByName("ATTIC"), 17));
 	}
 	
 	public BeaconIdentifier getBeaconByName(String name) {
@@ -91,6 +88,16 @@ public class BackgroundService extends Service {
 		String MAC = rangedBeacon.getMacAddress();
 		double distance = Utils.computeAccuracy(rangedBeacon);
 		long timestamp = System.currentTimeMillis();
+		
+		//MEDIATOUR
+		if (MAC.equals("F9:07:51:9A:CF:95") && distance < 0.5) {
+			//TREX NEARBY
+			((IJsBeaconsApplication) this.getApplication()).setMediaTourBeacon("TREX");
+		}
+		if (MAC.equals("FA:7F:24:AD:57:CC") && distance < 0.5) {
+			//ENTRANCE NEARBY
+			((IJsBeaconsApplication) this.getApplication()).setMediaTourBeacon("MEDIATOURSTART");
+		}
 		
 		boolean beaconFound = false;
 
@@ -155,10 +162,8 @@ public class BackgroundService extends Service {
 			double deltaZ = bcn1.location[2] - bcn2.location[2];
 
 			distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
-		}
-		
-		if (bcn1.name.equals("LUNCHROOM") || bcn2.name.equals("LUNCHROOM")) {
-			distance = lunchRoomDistance;
+			
+			distance += (bcn1.location[3] + bcn2.location[3]);
 		}
 		
 		return distance;
@@ -225,7 +230,7 @@ public class BackgroundService extends Service {
 		public void run() {
 			try {				
 				while(true) {
-					Thread.sleep(30000);
+					Thread.sleep(300000);
 					
 					System.out.println("UPDATE USER STATS");
 					
@@ -311,10 +316,6 @@ public class BackgroundService extends Service {
 		}
 		if (newBeacon.name.equals("LUNCHROOM")) {
 			lunchRoomCount++;
-		}
-		
-		if (newBeacon.name.equals("TREX") || newBeacon.name.equals("MEDIATOURSTART")) {
-			((IJsBeaconsApplication) this.getApplication()).setMediaTourBeacon(newBeacon.name);
 		}
 		
 		//Calculate walking speed

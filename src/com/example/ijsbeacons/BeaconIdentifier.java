@@ -9,7 +9,7 @@ public class BeaconIdentifier {
 	String name;
 	List<Double> distanceList = new ArrayList<Double>();
 	long lastSeen;
-	int location[] = {0, 0, 0};
+	int location[] = {0, 0, 0, 0};
 	
 	public BeaconIdentifier() {
 		

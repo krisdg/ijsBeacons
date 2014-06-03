@@ -63,19 +63,23 @@ public class MediatourWaitActivity extends Activity
 		    		String closestBeacon;
 		    		closestBeacon = app.getMediaTourBeacon();
 		    		
-		    		if (closestBeacon.equals("TREX")) {
-		    			Intent popup = new Intent(self, MediatourPopupActivity.class);
-		    			startActivity(popup);
-						overridePendingTransition(R.anim.slideup, R.anim.slidedown);
-		    			break;
+		    		if (closestBeacon.equals(app.getMediaTourLastBeacon()) == false) {
+						app.setMediaTourLastBeacon(closestBeacon);
+						
+			    		if (closestBeacon.equals("TREX")) {
+			    			Intent popup = new Intent(self, MediatourPopupActivity.class);
+			    			startActivity(popup);
+							overridePendingTransition(R.anim.slideup, R.anim.slidedown);
+			    			break;
+			    		}
+			    		if (closestBeacon.equals("MEDIATOURSTART")) {
+			    			Intent popup = new Intent(self, MediatourPopupWelcomeActivity.class);
+			    			startActivity(popup);
+							overridePendingTransition(R.anim.slideup, R.anim.slidedown);
+			    			break;
+			    		}
 		    		}
-		    		if (closestBeacon.equals("MEDIATOURSTART")) {
-		    			Intent popup = new Intent(self, MediatourPopupWelcomeActivity.class);
-		    			startActivity(popup);
-						overridePendingTransition(R.anim.slideup, R.anim.slidedown);
-		    			break;
-		    		}
-		    		
+
 		    		try {
 						Thread.sleep(500);
 					} catch (InterruptedException e) {

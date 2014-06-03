@@ -9,6 +9,7 @@ public class IJsBeaconsApplication extends Application {
 
     private String userAndroidId;
     private String MediaTourClosestBeacon = "";
+    private String lastBeaconMediaTour = "";
 
     public String getUserAndroidId() {
         return userAndroidId;
@@ -24,5 +25,13 @@ public class IJsBeaconsApplication extends Application {
 
 	public String getMediaTourBeacon() {
 		return MediaTourClosestBeacon;
+	}
+
+	public String getMediaTourLastBeacon() {
+		return lastBeaconMediaTour;
+	}
+
+	public void setMediaTourLastBeacon(String lastBeacon) {
+		lastBeaconMediaTour = lastBeacon;
 	}
 }
