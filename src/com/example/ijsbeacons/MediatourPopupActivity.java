@@ -17,7 +17,9 @@ public class MediatourPopupActivity extends Activity
 {
 	private TextView popupTitle;
 	private TextView popupText;
+	private TextView popupText2;
 	private String content;
+	private String content2;
 	private Button btnContest;
 	
 	private boolean isRunning;
@@ -42,48 +44,13 @@ public class MediatourPopupActivity extends Activity
 		
 		popupTitle = (TextView) findViewById(R.id.popupTitle);
 		popupText = (TextView) findViewById(R.id.popupText);
-		btnContest = (Button) findViewById(R.id.btnContest);
+		popupText2 = (TextView) findViewById(R.id.popupText2);
 		
-		content = "Kijk, " + personName + ", een dinosaurus!\nDeze dinosaurus wordt een Tiranosaurus Rex genoemd, of T-Rex in het kort. Deze T-Rex bestaat volledig uit legostenen!";
-		Boolean hasParticipated = settings.getBoolean("hasParticipated", false);
-		if( hasParticipated )
-		{
-			btnContest.setVisibility(View.GONE);
-			
-		} else {
-			
-			content += "\nKan jij raden uit hoeveel deze T-Rex bestaat? Klik op onderstaande knop om mee te doen met onze wedstrijd, en win een bezoek aan Legoland!";
-		}
+		content = "Kijk " + personName + ", een T-Rex! Deze T-Rex is gemaakt door Mart Zonneveld in juni 2014. Het bouwen ervan heeft wel 2,5 uur geduurd! De rode kleur is voortgekomen uit de bloederige roofpartijen die dit roofdier heeft begaan.";
+		content2 = "Wist jij dat een Tyrannosaurus Rex tijdens het roven wel 70 kilometer per uur kon halen? Daarnaast was hij het grootste landroofdier in het Jura-tijdperk.";
 
-		popupTitle.setText("T-Rex van Legostenen!");
+		popupTitle.setText("T-REX");
 		popupText.setText(content);
-		btnContest.setText("Doe mee!");
-		btnContest.setOnClickListener(
-			new View.OnClickListener() {
-				
-				@Override
-				public void onClick(View v)
-				{
-					Intent popup = new Intent(self, MediatourContestActivity.class);
-					startActivityForResult(popup, 1);
-//					startActivity(popup);
-				}
-			}
-		);
+		popupText2.setText(content2);
 	}
-	
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data)
-	{
-		Boolean hasParticipated = settings.getBoolean("hasParticipated", false);
-		if( hasParticipated )
-		{
-			content = "Kijk, " + personName + ", een dinosaurus!\nDeze dinosaurus wordt een Tiranosaurus Rex genoemd, of T-Rex in het kort. Deze T-Rex bestaat volledig uit legostenen!";
-			popupText.setText(content);
-			
-			btnContest.setVisibility(View.GONE);
-		}
-	}
-
 }

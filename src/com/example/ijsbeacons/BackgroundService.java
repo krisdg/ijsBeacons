@@ -91,12 +91,13 @@ public class BackgroundService extends Service {
 		
 		//MEDIATOUR
 		if (MAC.equals("F9:07:51:9A:CF:95") && distance < 0.5) {
-			//TREX NEARBY
-			((IJsBeaconsApplication) this.getApplication()).setMediaTourBeacon("TREX");
+			//8 LEGOOBJECT NEARBY
+			((IJsBeaconsApplication) this.getApplication()).setMediaTourBeacon("LEGOOBJECT");
 		}
 		if (MAC.equals("FA:7F:24:AD:57:CC") && distance < 0.5) {
-			//ENTRANCE NEARBY
-			((IJsBeaconsApplication) this.getApplication()).setMediaTourBeacon("MEDIATOURSTART");
+			//9 EXIT NEARBY
+			((IJsBeaconsApplication) this.getApplication()).setMediaTourBeacon("MEDIATOUREND");
+			this.stopSelf();
 		}
 		
 		boolean beaconFound = false;
@@ -408,15 +409,15 @@ public class BackgroundService extends Service {
 		
 		Thread calculateLocation = new Thread(new CalculateLocation());
 		calculateLocation.start();
-		Thread updateUserStatistics = new Thread(new UpdateUserStatistics());
-		updateUserStatistics.start();
+		//Thread updateUserStatistics = new Thread(new UpdateUserStatistics());
+		//updateUserStatistics.start();
 	}
 
 	@Override
 	public void onDestroy() {
 		isRunning = false;
 
-		Toast.makeText(this, "ijsBeacons service gestopt", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(this, "ijsBeacons service gestopt", Toast.LENGTH_SHORT).show();
 	}
 
 }

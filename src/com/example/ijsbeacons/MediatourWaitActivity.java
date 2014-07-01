@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -22,6 +23,7 @@ public class MediatourWaitActivity extends Activity
 	
 	private boolean isRunning;
 	private SharedPreferences settings;
+	private String personName;
 	
 	Context self;
 	
@@ -29,6 +31,7 @@ public class MediatourWaitActivity extends Activity
 	{
 		self = this;
 		settings = getSharedPreferences("ijsBeacons_Mediatour", 0);
+		personName = settings.getString("welcomeName", "persoon");
 
 		super.onCreate(savedInstanceState);
 		
@@ -44,8 +47,8 @@ public class MediatourWaitActivity extends Activity
 		contestValue = (EditText) findViewById(R.id.contestValue);
 		welcomeButton = (Button) findViewById(R.id.btnContest);
 
-		welcomeTitle.setText("Mediatour demo");
-		welcomeText.setText("Loop gerust rond. Mocht er iets interessants in de buurt zijn vertellen wij het je!");
+		welcomeTitle.setText("ART OF THE BRICK");
+		welcomeText.setText("\n\n\n\n\n\n\nHallo " + personName + "! Loop gerust rond door de expositie. Mocht er iets interessants in de buurt zijn laat ik het je weten!");
 		welcomeName.setVisibility(View.GONE);
 		contestValue.setVisibility(View.GONE);
 		welcomeButton.setVisibility(View.GONE);
@@ -66,14 +69,19 @@ public class MediatourWaitActivity extends Activity
 		    		if (closestBeacon.equals(app.getMediaTourLastBeacon()) == false) {
 						app.setMediaTourLastBeacon(closestBeacon);
 						
-			    		if (closestBeacon.equals("TREX")) {
+			    		if (closestBeacon.equals("LEGOOBJECT")) {
+			    			Vibrator v = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                            v.vibrate(1000);
+
 			    			Intent popup = new Intent(self, MediatourPopupActivity.class);
 			    			startActivity(popup);
 							overridePendingTransition(R.anim.slideup, R.anim.slidedown);
-			    			break;
 			    		}
-			    		if (closestBeacon.equals("MEDIATOURSTART")) {
-			    			Intent popup = new Intent(self, MediatourPopupWelcomeActivity.class);
+			    		if (closestBeacon.equals("MEDIATOUREND")) {
+			    			Vibrator v = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                            v.vibrate(1000);
+
+			    			Intent popup = new Intent(self, MediatourContestActivity.class);
 			    			startActivity(popup);
 							overridePendingTransition(R.anim.slideup, R.anim.slidedown);
 			    			break;

@@ -18,6 +18,7 @@ import android.provider.Settings.Secure;
 
 public class StartupActivity extends Activity
 {
+	boolean Expo = true;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -38,21 +39,25 @@ public class StartupActivity extends Activity
 
 		//CHECK IF ANDROID ID EXISTS IN DATABASE
 		boolean userExists = false;
-		try {
-			SoapResult_getUser result = (SoapResult_getUser) new SendSoapRequest().execute(new SoapRequest_getUserByAndroidId(userAndroidId)).get();
+//		try {
+//			SoapResult_getUser result = (SoapResult_getUser) new SendSoapRequest().execute(new SoapRequest_getUserByAndroidId(userAndroidId)).get();
+//		
+//			if (result != null && result.resultCode == 1) {
+//				userExists = true;
+//			}
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (ExecutionException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
-			if (result != null && result.resultCode == 1) {
-				userExists = true;
-			}
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		if (userExists) {
+		if (Expo == true) {
+			//GO EMEDIATELY TO EXPO
+	    	Intent intent = new Intent(this, MediatourActivity.class);
+	        startActivity(intent);
+		} else if (userExists) {
 			//IF SO: GO TO MAINACTIVITY
 	    	Intent intent = new Intent(this, MainActivity.class);
 	        startActivity(intent);

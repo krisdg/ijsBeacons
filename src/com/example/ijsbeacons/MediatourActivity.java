@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.TextureView;
 import android.view.View;
 import android.view.Window;
@@ -45,16 +46,15 @@ public class MediatourActivity extends Activity
 		editor.putBoolean("hasParticipated", false);
 		editor.commit();
 		
-		
 		welcomeTitle = (TextView) findViewById(R.id.welcomeTitle);
 		welcomeText = (TextView) findViewById(R.id.welcomeText);
 		welcomeName = (EditText) findViewById(R.id.welcomeName);
 		contestValue = (EditText) findViewById(R.id.contestValue);
 		welcomeButton = (Button) findViewById(R.id.btnContest);
 		
-		welcomeTitle.setText("Welkom!");
-		welcomeText.setText("Dit is een demo. Voer uw naam in om te starten met de mediatour!");
-		welcomeButton.setText("Ga verder");
+		welcomeTitle.setText("WELKOM!");
+		welcomeText.setText("\n\n\nBedankt dat u ons wilt helpen bij het testen van onze app. Om de tour te starten voert u hieronder uw naam in en klikt u op start. Veel plezier!");
+		welcomeButton.setText("Start");
 		contestValue.setVisibility(View.GONE);
 		
 		// secure the "this"
@@ -77,11 +77,8 @@ public class MediatourActivity extends Activity
 						Intent MediatourWaitActivity = new Intent(self, MediatourWaitActivity.class);
 						startActivity(MediatourWaitActivity);
 					}
-
 				}
 			}
 		);
-		
 	}
-
 }

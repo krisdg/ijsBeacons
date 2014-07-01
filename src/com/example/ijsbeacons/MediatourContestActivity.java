@@ -2,6 +2,7 @@ package com.example.ijsbeacons;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -51,11 +52,11 @@ public class MediatourContestActivity extends Activity
 		contestValue = (EditText) findViewById(R.id.contestValue);
 		btnContest = (Button) findViewById(R.id.btnContest);
 
-		welcomeTitle.setText("Uit hoeveel legostenen bestaat de T-Rex??");
-		welcomeText.setText(personName + ", leuk dat je interesse toont!\nOm mee te doen met deze wedstrijd, hoef je naast je gok van het aantal legostenen, alleen je e-mail in te vullen. JeU krijgt alleen een mail ter bevestiging van je inzending, en een mail met de uitslag.");
+		welcomeTitle.setText("BEDANKT!");
+		welcomeText.setText(personName + ", bedankt dat je zoveel interesse hebt getoond! Om je te bedanken mag je deelnemen aan de westrijd voor 2 gratis tickets voor deze expositie om weg te geven! De vraag is, hoeveel legostenen bevat deze ruimte? Wij sturen je een mail als je in de prijzen bent gevallen!");
 		
 		contestValue.setHint("Legostenen");
-		welcomeName.setHint("email adres");
+		welcomeName.setHint("E-mailadres");
 		
 		btnContest.setText("Doe mee!");
 		btnContest.setOnClickListener(
@@ -68,7 +69,10 @@ public class MediatourContestActivity extends Activity
 					editor.putBoolean("hasParticipated", true);
 					editor.commit();
 					
-					Toast.makeText(self, "Bedankt " + personName + ", voor je inzending!", Toast.LENGTH_LONG).show();
+	    			Intent popup = new Intent(self, MediatourEnd.class);
+	    			startActivity(popup);
+					overridePendingTransition(R.anim.slideup, R.anim.slidedown);
+					
 					finish();
 				}
 			}
