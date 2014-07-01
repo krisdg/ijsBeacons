@@ -2,25 +2,34 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/achtergrondlego"
     android:orientation="vertical" >
 
     <TextView
         android:id="@+id/welcomeTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:gravity="center"
         android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#FFFFFF"
+        android:textSize="32sp" />
 
-    <EditText
-        android:id="@+id/contestValue"
+    <TextView
+        android:id="@+id/welcomeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/welcomeName"
-        android:layout_below="@+id/welcomeText"
-        android:layout_marginTop="25dp"
-        android:ems="10" />
+        android:layout_below="@+id/welcomeTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="29dp"
+        android:gravity="center"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000"
+        android:width="273dp" />
 
     <EditText
         android:id="@+id/welcomeName"
@@ -28,11 +37,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/contestValue"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
-        android:ems="10" >
-
-        <requestFocus />
-    </EditText>
+        android:layout_marginTop="7dp"
+        android:ems="10"
+        android:textColor="#000000"
+        android:textColorLink="#000000" />
 
     <Button
         android:id="@+id/btnContest"
@@ -40,17 +48,22 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/welcomeName"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:text="Button" />
+        android:layout_marginTop="9dp"
+        android:text="Button"
+        android:width="200dp" />
 
-    <TextView
-        android:id="@+id/welcomeText"
+    <EditText
+        android:id="@+id/contestValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/welcomeTitle"
-        android:layout_marginTop="30dp"
-        android:text="Medium Text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_alignLeft="@+id/welcomeName"
+        android:layout_below="@+id/welcomeText"
+        android:layout_marginTop="7dp"
+        android:ems="10"
+        android:inputType="number"
+        android:textColor="#000000" >
+
+        <requestFocus />
+    </EditText>
 
 </RelativeLayout>
